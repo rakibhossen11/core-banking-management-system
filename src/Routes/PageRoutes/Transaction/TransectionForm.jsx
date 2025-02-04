@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 
-const TransectionForm = () => {
+const TransectionForm = ({ onTransaction }) => {
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("deposit");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(type,amount);
     if(!amount || isNaN(amount) || amount <= 0){
         alert("Please enter a valid amount");
         return;
-    }else{
-        console.log(amount);
     }
+    onTransaction(type, parseFloat(amount));
+    setAmount("");
     
   };
 
@@ -32,7 +33,7 @@ const TransectionForm = () => {
       <div>
         <label htmlFor=""></label>
         <select
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => setType(e.target.value)}
           value={type}
           className="w-full p-2 border rounded-lg"
         >

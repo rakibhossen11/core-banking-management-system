@@ -1,6 +1,7 @@
 import React from 'react';
 import Profile from './Routes/PageRoutes/ProfilePage/Profile';
 import TransectionForm from './Routes/PageRoutes/Transaction/TransectionForm';
+import Transections from './Routes/PageRoutes/Transaction/Transections';
 
 function App() {
   
@@ -9,6 +10,7 @@ function App() {
     <>
      <Profile />
      <TransectionForm />
+     <Transections />
     </>
   )
 }
