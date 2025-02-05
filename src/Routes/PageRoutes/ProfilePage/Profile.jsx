@@ -1,8 +1,11 @@
 import React from "react";
 import Trasection from "../Transaction/Transection";
 import ProfileCard from "./ProfileCard";
+import { useSelector } from "react-redux";
 
 const Profile = () =>{
+    const balance = useSelector((state) => state.banking.balance);
+    console.log("balance from profile",balance)
 
     const transection = [
         {
@@ -21,7 +24,7 @@ const Profile = () =>{
     const userData = {
         name: "John Doe",
         accountNumber: "1234567890",
-        balance: "5,240.75",
+        balance: `${balance}`,
         profilePicture: "https://via.placeholder.com/150",
       };
 

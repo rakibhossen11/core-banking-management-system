@@ -1,34 +1,37 @@
 import React, { useState } from "react";
 import TransectionForm from "./TransectionForm";
 import TransectionHistory from "./TransectionHistory";
+import { useSelector } from "react-redux";
 
 const Transections = () => {
-  const [balance, setBalance] = useState(1000); // Initial balance
-  const [transection, setTransection] = useState([]); // Transection history
+  const balance = useSelector((state) => state.banking.balance);
 
-  // handle deposit and withdraw
-  const handleTrasection = (type, amount) => {
-    if(type === "deposit"){
-        setBalance(balance + amount);
-    }else if(type === "withdraw"){
-        if(amount > balance){
-            alert("Insufficiant fund!");
-            return;
-        }
-        setBalance(balance - amount);
-    }
+    // const [balance, setBalance] = useState(1000); // Initial balance
+    // const [transection, setTransection] = useState([]); // Transection history
 
-    // add traeaction history
-    setTransection([
-        ...transection,
-        {
-            id: Date.now(),
-            type,
-            amount,
-            date: new Date().toLocaleString(),
-        }
-    ]);
-  };
+    // handle deposit and withdraw
+    // const handleTrasection = (type, amount) => {
+    //   if(type === "deposit"){
+    //       setBalance(balance + amount);
+    //   }else if(type === "withdraw"){
+    //       if(amount > balance){
+    //           alert("Insufficiant fund!");
+    //           return;
+    //       }
+    //       setBalance(balance - amount);
+    //   }
+
+    //   // add traeaction history
+    //   setTransection([
+    //       ...transection,
+    //       {
+    //           id: Date.now(),
+    //           type,
+    //           amount,
+    //           date: new Date().toLocaleString(),
+    //       }
+    //   ]);
+    // };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -40,10 +43,12 @@ const Transections = () => {
           <p className="text-2xl">${balance.toFixed(2)}</p>
         </div>
         {/* Transaction Form */}
-        <TransectionForm onTransaction={handleTrasection} />
+        {/* <TransectionForm onTransaction={handleTrasection} /> */}
+        <TransectionForm />
 
         {/* Transaction History */}
-        <TransectionHistory transactions={transection} />
+        {/* <TransectionHistory transactions={transection} /> */}
+        <TransectionHistory />
       </div>
     </div>
   );

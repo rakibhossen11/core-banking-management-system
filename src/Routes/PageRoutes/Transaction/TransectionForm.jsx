@@ -1,19 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import {deposit,withdraw} from "../../../redux/feature/bankingSlice";
 
 const TransectionForm = ({ onTransaction }) => {
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("deposit");
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(type,amount);
-    if(!amount || isNaN(amount) || amount <= 0){
-        alert("Please enter a valid amount");
-        return;
+    console.log(type, amount);
+    if (!amount || isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid amount");
+      return;
     }
-    onTransaction(type, parseFloat(amount));
+    if (type === "deposit") {
+      dispatch(deposit(parseFloat(amount)));
+    } else if (type === "withdraw") {
+      dispatch(withdraw(parseFloat(amount)));
+    }
     setAmount("");
-    
+    // onTransaction(type, parseFloat(amount));
+    // setAmount("");
   };
 
   return (

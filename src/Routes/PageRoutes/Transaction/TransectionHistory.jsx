@@ -1,7 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const TransectionHistory = ({ transactions }) => {
-  // console.log(transection.length);
+const TransectionHistory = () => {
+  const transactions = useSelector((state) => state.banking.transactions);    
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">Transaction History</h2>
