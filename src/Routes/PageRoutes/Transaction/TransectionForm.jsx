@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {deposit,withdraw} from "../../../redux/feature/bankingSlice";
 
-const TransectionForm = ({ onTransaction }) => {
+const TransectionForm = () => {
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("deposit");
+  const [ression, setRession] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(type, amount);
+    console.log("from form",type, amount,ression);
     if (!amount || isNaN(amount) || amount <= 0) {
       alert("Please enter a valid amount");
       return;
@@ -19,7 +20,9 @@ const TransectionForm = ({ onTransaction }) => {
     } else if (type === "withdraw") {
       dispatch(withdraw(parseFloat(amount)));
     }
+    dispatch(ression);
     setAmount("");
+    setRession("");
     // onTransaction(type, parseFloat(amount));
     // setAmount("");
   };
@@ -36,6 +39,18 @@ const TransectionForm = ({ onTransaction }) => {
           className="w-full p-2 border rounded-lg"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-2" htmlFor="">
+          Transaction 
+        </label>
+        <input
+          placeholder="Enter Details"
+          type="text"
+          className="w-full p-2 border rounded-lg"
+          value={ression}
+          onChange={(e) => setRession(e.target.value)}
         />
       </div>
       <div>
