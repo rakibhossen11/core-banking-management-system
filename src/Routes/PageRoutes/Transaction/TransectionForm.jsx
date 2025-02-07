@@ -23,8 +23,6 @@ const TransectionForm = () => {
     dispatch(ression);
     setAmount("");
     setRession("");
-    // onTransaction(type, parseFloat(amount));
-    // setAmount("");
   };
 
   return (
