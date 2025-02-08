@@ -19,12 +19,12 @@ function App() {
 
   return (
     <div>
-     <Profile />
+     {/* <Profile /> */}
      {/* <Transections /> */}
-     <FinancialTables />
+     {/* <FinancialTables /> */}
      <Stock />
      <StockTable />
-     <Input />
+     {/* <Input /> */}
     </div>
   )
 }

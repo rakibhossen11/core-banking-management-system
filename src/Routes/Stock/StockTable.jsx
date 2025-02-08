@@ -8,12 +8,10 @@ const StockTable = () => {
     return (
         <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto">
-        {/* Stock Form */}
-        <StockInForm />
-
         {/* Stock List */}
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-6">Stock List</h2>
+          <StockInForm />
           {stocks.length === 0 ? (
             <p className="text-gray-500">No stock items available.</p>
           ) : (
@@ -27,7 +25,6 @@ const StockTable = () => {
                         Quantity: {stock.quantity} | Price: ${stock.price.toFixed(2)}
                       </p>
                     </div>
-                    <StockInForm stockToUpdate={stock} />
                   </div>
                 </li>
               ))}
