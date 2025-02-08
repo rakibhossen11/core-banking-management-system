@@ -22,15 +22,15 @@ const FinancialTables = () => {
   return (
     <div className="p-6">
       <h2 className="text-xl font-semibold mb-4">Users</h2>
-      <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
+      <table className="w-full caption-bottom text-sm bg-[#f9fafb]">
         <thead className="bg-gray-200">
-          <tr>
-            <th className="p-2">ID</th>
-            <th className="p-2">Name</th>
-            <th className="p-2">Email</th>
-            <th className="p-2">Account Type</th>
-            <th className="p-2">Balance ($)</th>
-            <th className="p-2">Registration Date</th>
+          <tr className="">
+            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">ID</th>
+            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Name</th>
+            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Email</th>
+            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Account Type</th>
+            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Balance ($)</th>
+            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Registration Date</th>
           </tr>
         </thead>
         <tbody>

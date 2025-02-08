@@ -4,9 +4,9 @@ import { addStock, updateStock } from "../../redux/feature/stockSlice";
 
 const StockInForm = ({stockToUpdate}) => {
     const dispatch = useDispatch();
-    const [name,setName] = useState(stockToUpdate ? stockToUpdate.name : "");
-    const [quantity,setQuantity] = useState(stockToUpdate ? stockToUpdate.quantity : "");
-    const [price,setPrice] =  useState(stockToUpdate ? stockToUpdate.price : "");
+    const [name,setName] = useState("");
+    const [quantity,setQuantity] = useState("");
+    const [price,setPrice] =  useState("");
 
     const handleSubmit = (e) =>{
       e.preventDefault();
@@ -17,19 +17,14 @@ const StockInForm = ({stockToUpdate}) => {
         }
 
         const stock = {
-            id : stockToUpdate ? stockToUpdate.id : Date.now(),
+            name: name,
             quantity : parseInt(quantity),
             price : parseFloat(price)
         }
         console.log(stock)
+        console.log(dispatch(addStock(stock)));
 
-        if(stockToUpdate){
-            dispatch(updateStock(stock));
-        }else{
-            dispatch(addStock(stock));
-        }
-
-        // // reset form
+        // reset form
         // setName("");
         // setQuantity("");
         // setPrice("");
@@ -74,6 +69,21 @@ const StockInForm = ({stockToUpdate}) => {
         />
       </div>
 
+      {/* Quantity Field */}
+      <div className="mb-4">
+        <label htmlFor="quantity" className="block text-sm font-medium mb-2">
+          Quantity
+        </label>
+        <input
+          type="number"
+          id="quantity"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          className="w-full p-2 border rounded-lg"
+          placeholder="Enter quantity"
+        />
+      </div>
+
       {/* Price Field */}
       <div className="mb-6">
         <label htmlFor="price" className="block text-sm font-medium mb-2">
@@ -89,13 +99,6 @@ const StockInForm = ({stockToUpdate}) => {
         />
       </div>
 
-      {/* Submit Button */}
-      {/* <button
-        type="submit"
-        className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
-      >
-        {stockToUpdate ? "Update Stock" : "Add Stock"}
-      </button> */}
       <button
         type="submit"
         className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"

@@ -15,6 +15,7 @@ const TransectionForm = () => {
       alert("Please enter a valid amount");
       return;
     }
+
     if (type === "deposit") {
       dispatch(deposit(parseFloat(amount)));
     } else if (type === "withdraw") {

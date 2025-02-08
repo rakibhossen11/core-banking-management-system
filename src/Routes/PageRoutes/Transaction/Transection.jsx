@@ -11,23 +11,7 @@ import { useSelector } from "react-redux";
 
 const Trasection = () => {
   const transactions = useSelector((state) => state.banking.transactions);
-  console.log("banking from form", transactions);
-  const reports = [
-    {
-      debit: 125,
-      credit: 32,
-      detail: "Buy Machine",
-      date: "02/02/2025",
-    },
-    {
-      debit: 1225,
-      credit: 322,
-      detail: "Buy Machine",
-      date: "02/02/2025",
-    },
-  ];
-
-  // const balance = (125 - 32);
+  console.log(transactions);
 
   return (
     <div className="overflow-x-auto">
@@ -51,7 +35,7 @@ const Trasection = () => {
                   {report.date}
                 </TableCell>
                 <TableCell>{report.detail}</TableCell>
-                <TableCell>{(report.type === "withdraw" ? report.amount : 0 )}</TableCell>
+                <TableCell >{(report.type === "withdraw" ? report.amount : 0 )}</TableCell>
                 <TableCell>{(report.type === "deposit" ? report.amount : 0 )}</TableCell>
                 <TableCell>{report.balanceAfterTransaction}</TableCell>
                 <TableCell>

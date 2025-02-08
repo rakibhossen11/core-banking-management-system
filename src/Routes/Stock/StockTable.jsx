@@ -4,6 +4,7 @@ import StockInForm from './StockInForm';
 
 const StockTable = () => {
     const stocks = useSelector((state) => state.stock.stocks);
+    console.log(useSelector((state) => state.stock.stocks));
     return (
         <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-4xl mx-auto">

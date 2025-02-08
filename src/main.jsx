@@ -8,8 +8,10 @@ import { store } from "./redux/store.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <div className="flex items-center justify-center max-w-[1920px]">
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </div>
   </StrictMode>
 );

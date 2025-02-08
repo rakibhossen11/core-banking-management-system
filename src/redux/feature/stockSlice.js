@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     stocks : [], // list of stock item
+    stocksHistory : [], // stocks history
 }
 
 const stockSlice = createSlice({
@@ -9,7 +10,13 @@ const stockSlice = createSlice({
     initialState,
     reducers : {
         addStock: (state, action) =>{
-            state.stocks.push(action.payload);
+            console.log(action.payload.price);
+            state.stocks.push({
+                id : Date.now(),
+                price : action.payload.price,
+                quantity : action.payload.quantity,
+                name : action.payload.name,
+            });
         },
         // updateStock: (state, action) => {
         //     const {id,name,quantity,price} = action.payload;
