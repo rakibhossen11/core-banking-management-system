@@ -8,6 +8,7 @@ import StockInForm from './Routes/Stock/StockInForm';
 import { useDispatch } from 'react-redux';
 import StockTable from './Routes/Stock/StockTable';
 import Input from './components/ui/Input';
+import Table from './components/ui/Table';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,9 +22,11 @@ function App() {
     <div>
      {/* <Profile /> */}
      {/* <Transections /> */}
-     {/* <FinancialTables /> */}
+     <FinancialTables />
      <Stock />
      <StockTable />
+     <Table />
+     {/* <TableHea */}
      {/* <Input /> */}
     </div>
   )

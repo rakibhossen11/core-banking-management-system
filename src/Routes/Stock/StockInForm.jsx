@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addStock, updateStock } from "../../redux/feature/stockSlice";
+import { addProduct } from "../../redux/feature/productSlice";
 import Input from "../../components/ui/Input";
 import Label from "../../components/ui/lebal";
 import products from "../../components/Products/product";
@@ -9,25 +10,31 @@ import InputSelect from "../../components/ui/InputSelect";
 const StockInForm = ({ stockToUpdate }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [pid, setPid] = useState("");
+  const [purchasePrice, setpurchasePrice] = useState("");
+  const [sellprice, setsellPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [price, setPrice] = useState("");
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, quantity, price);
-    if (!name || !quantity || !price) {
+    console.log(name,pid,purchasePrice,sellprice,quantity);
+    if (!name || !pid || !purchasePrice ||!sellprice ||!quantity ) {
       alert("Please fill all fields!");
       return;
     }
 
-    const stock = {
+    const products = {
       name: name,
-      quantity: parseInt(quantity),
-      price: parseFloat(price),
+      pid: parseInt(pid),
+      purchasePrice: parseFloat(purchasePrice),
+      sellprice: parseFloat(sellprice),
+      quantity: parseFloat(quantity),
     };
-    console.log(stock);
-    console.log(dispatch(addStock(stock)));
+    console.log(products);
+    dispatch(addProduct(products));
+    // console.log(dispatch(addStock(stock)));
+    console.log(dispatch(addProduct(products)));
 
     // reset form
     // setName("");
@@ -41,8 +48,9 @@ const StockInForm = ({ stockToUpdate }) => {
       className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-6">
-        {stockToUpdate ? "Update Stock" : "Add Stock"}
+        Buy Product
       </h2>
+      <h1 className="text-2xl font-bold mb-6">form in under maintainance...</h1>
 
       {/* Products select name */}
       <div className="mb-4">
@@ -54,51 +62,38 @@ const StockInForm = ({ stockToUpdate }) => {
           onChange={(e) => setName(e.target.value)}
         />
       </div>
-
-      {/* Prodct id */}
-      {/* <div className="mb-4">
-        <label htmlFor="quantity" className="block text-sm font-medium mb-2">
-          Uniq Id
-        </label>
-        <input
-          type="number"
-          id="quantity"
-          value={products.map((p) => p.id)}
-          onChange={(e) => setQuantity(e.target.value)}
-          className="w-full p-2 border rounded-lg"
-          placeholder="Enter quantity"
-        />
-      </div> */}
-
-      {/* Quantity Field */}
-      <div className="mb-4">
-        <label htmlFor="quantity" className="block text-sm font-medium mb-2">
-          Quantity
-        </label>
-        <input
-          type="number"
-          id="quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          className="w-full p-2 border rounded-lg"
-          placeholder="Enter quantity"
-        />
-      </div>
-
-      {/* Price Field */}
-      <div className="mb-6">
-        <label htmlFor="price" className="block text-sm font-medium mb-2">
-          Price
-        </label>
-        <input
-          type="number"
-          id="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          className="w-full p-2 border rounded-lg"
-          placeholder="Enter price"
-        />
-      </div>
+      <Input
+        label="Product Id"
+        name="Product Id"
+        value={pid}
+        type="number"
+        onChange={(e) => setPid(e.target.value)}
+        placeholder="Product Id"
+      />
+      <Input
+        label="Purchase Price"
+        name="Purchase Price"
+        value={purchasePrice}
+        type="number"
+        onChange={(e) => setpurchasePrice(e.target.value)}
+        placeholder="Purchase Price"
+      />
+      <Input
+        label="Selling Price"
+        name="Selling Price"
+        value={sellprice}
+        type="number"
+        onChange={(e) => setsellPrice(e.target.value)}
+        placeholder="Selling Price"
+      />
+      <Input
+        label="Quantity"
+        name="Quantity"
+        value={quantity}
+        type="number"
+        onChange={(e) => setQuantity(e.target.value)}
+        placeholder="Quantity"
+      />
 
       <button
         type="submit"

@@ -1,11 +1,26 @@
-import React from 'react';
+import React from "react";
 
-const Table = () =>{
-    <table className='w-full caption-bottom text-sm bg-[#f9fafb]' />
-}
+const Table = ({ data , columns }) => {
+    // console.log(columns);
 
-const TableHead = () =>{
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            {/* {columns.map((col) =>(
+                <th scope="col" key={index}>
+                    {col.header}
+                </th>
+            ))} */}
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-}
-
-export {Table,TableHead};
+export default Table;

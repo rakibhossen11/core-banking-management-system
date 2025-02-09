@@ -1,101 +1,192 @@
-import React from "react";
+import React, { useState } from "react";
 
 const FinancialTables = () => {
-  const users = [
-    { id: 1, name: "Alice Johnson", email: "alice@example.com", accountType: "Savings", balance: 5000.75, registrationDate: "2023-01-10" },
-    { id: 2, name: "Bob Smith", email: "bob@example.com", accountType: "Checking", balance: 1200.50, registrationDate: "2023-03-15" },
-    { id: 3, name: "Charlie Lee", email: "charlie@example.com", accountType: "Investment", balance: 15000.00, registrationDate: "2023-06-20" }
-  ];
+  // data wise stock
+  const [records, setRecords] = useState([
+    {
+      date: "2025-02-08",
+      productName: "Product A",
+      stockIn: 50,
+      stockOut: 20,
+      totalStock: 30,
+      purchase: 1000,
+      sales: 1500,
+    },
+    {
+      date: "2025-02-09",
+      productName: "Product B",
+      stockIn: 30,
+      stockOut: 10,
+      totalStock: 50,
+      purchase: 600,
+      sales: 900,
+    },
+  ]);
 
-  const transactions = [
-    { id: 101, userId: 1, type: "Deposit", amount: 200.00, date: "2024-02-01" },
-    { id: 102, userId: 2, type: "Withdrawal", amount: 100.50, date: "2024-02-02" },
-    { id: 103, userId: 3, type: "Deposit", amount: 500.00, date: "2024-02-03" }
-  ];
+  // buy records
+  const [buyrecords, setbuyRecords] = useState([
+    {
+      date: "2025-02-08",
+      productName: "Product A",
+      stockIn: 50,
+      totalStock: 30,
+      purchase: 1000,
+    },
+    {
+      date: "2025-02-09",
+      productName: "Product B",
+      stockIn: 30,
+      totalStock: 50,
+      purchase: 600,
+    },
+  ]);
 
-  const investments = [
-    { id: 201, userId: 1, type: "Stock", amount: 3000.00, roi: 5.2, date: "2024-01-15" },
-    { id: 202, userId: 2, type: "Crypto", amount: 1500.00, roi: 10.1, date: "2024-01-20" },
-    { id: 203, userId: 3, type: "Stock", amount: 5000.00, roi: 7.5, date: "2024-01-25" }
-  ];
+  const [products, setProducts] = useState([
+    {
+      id: "P001",
+      name: "Product A",
+      category: "Electronics",
+      stockQuantity: 50,
+      supplier: "Supplier X",
+      purchasePrice: 20,
+      sellingPrice: 30,
+      unit: "pcs",
+      salesCount: 10,
+      stockIn: 20,
+      stockOut: 5,
+      notes: "Fast selling item",
+    },
+    {
+      id: "P002",
+      name: "Product B",
+      category: "Clothing",
+      stockQuantity: 30,
+      supplier: "Supplier Y",
+      purchasePrice: 15,
+      sellingPrice: 25,
+      unit: "pcs",
+      salesCount: 5,
+      stockIn: 15,
+      stockOut: 3,
+      notes: "New arrival",
+    },
+  ]);
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-semibold mb-4">Users</h2>
-      <table className="w-full caption-bottom text-sm bg-[#f9fafb]">
-        <thead className="bg-gray-200">
-          <tr className="">
-            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">ID</th>
-            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Name</th>
-            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Email</th>
-            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Account Type</th>
-            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Balance ($)</th>
-            <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">Registration Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-t">
-              <td className="p-2 text-center">{user.id}</td>
-              <td className="p-2">{user.name}</td>
-              <td className="p-2">{user.email}</td>
-              <td className="p-2">{user.accountType}</td>
-              <td className="p-2 text-right">{user.balance.toFixed(2)}</td>
-              <td className="p-2 text-center">{user.registrationDate}</td>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Stock Management</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 bg-white shadow-md rounded-lg">
+          <thead className="bg-gray-200">
+            <tr>
+              {[
+                "Product ID",
+                "Product Name",
+                "Category",
+                "Stock Quantity",
+                "Supplier",
+                "Purchase Price",
+                "Selling Price",
+                "Unit of Measure",
+                "Sales Count",
+                "Stock In",
+                "Stock Out",
+                "Remarks / Notes",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  className="px-4 py-2 border text-left font-semibold"
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {products.map((product, index) => (
+              <tr key={index} className="border hover:bg-gray-100">
+                <td className="px-4 py-2 border">{product.id}</td>
+                <td className="px-4 py-2 border">{product.name}</td>
+                <td className="px-4 py-2 border">{product.category}</td>
+                <td className="px-4 py-2 border">{product.stockQuantity}</td>
+                <td className="px-4 py-2 border">{product.supplier}</td>
+                <td className="px-4 py-2 border">${product.purchasePrice}</td>
+                <td className="px-4 py-2 border">${product.sellingPrice}</td>
+                <td className="px-4 py-2 border">{product.unit}</td>
+                <td className="px-4 py-2 border">{product.salesCount}</td>
+                <td className="px-4 py-2 border">{product.stockIn}</td>
+                <td className="px-4 py-2 border">{product.stockOut}</td>
+                <td className="px-4 py-2 border">{product.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <h2 className="text-xl font-semibold mt-6 mb-4">Transactions</h2>
-      <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="p-2">Transaction ID</th>
-            <th className="p-2">User ID</th>
-            <th className="p-2">Type</th>
-            <th className="p-2">Amount ($)</th>
-            <th className="p-2">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((tx) => (
-            <tr key={tx.id} className="border-t">
-              <td className="p-2 text-center">{tx.id}</td>
-              <td className="p-2 text-center">{tx.userId}</td>
-              <td className="p-2 text-center">{tx.type}</td>
-              <td className="p-2 text-right">{tx.amount.toFixed(2)}</td>
-              <td className="p-2 text-center">{tx.date}</td>
+      <h1 className="text-2xl font-bold mb-4">Stock & Sales Record</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 bg-white shadow-md rounded-lg">
+          <thead className="bg-gray-200">
+            <tr>
+              {[
+                "Date",
+                "Product Name",
+                "Stock In",
+                "Stock Out",
+                "Total Stock",
+                "Purchase Amount",
+                "Sales Amount",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  className="px-4 py-2 border text-left font-semibold"
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {records.map((record, index) => (
+              <tr key={index} className="border hover:bg-gray-100">
+                <td className="px-4 py-2 border">{record.date}</td>
+                <td className="px-4 py-2 border">{record.productName}</td>
+                <td className="px-4 py-2 border">{record.stockIn}</td>
+                <td className="px-4 py-2 border">{record.stockOut}</td>
+                <td className="px-4 py-2 border">{record.totalStock}</td>
+                <td className="px-4 py-2 border">${record.purchase}</td>
+                <td className="px-4 py-2 border">${record.sales}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <h2 className="text-xl font-semibold mt-6 mb-4">Investments</h2>
-      <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="p-2">Investment ID</th>
-            <th className="p-2">User ID</th>
-            <th className="p-2">Type</th>
-            <th className="p-2">Amount ($)</th>
-            <th className="p-2">ROI (%)</th>
-            <th className="p-2">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {investments.map((inv) => (
-            <tr key={inv.id} className="border-t">
-              <td className="p-2 text-center">{inv.id}</td>
-              <td className="p-2 text-center">{inv.userId}</td>
-              <td className="p-2 text-center">{inv.type}</td>
-              <td className="p-2 text-right">{inv.amount.toFixed(2)}</td>
-              <td className="p-2 text-right">{inv.roi.toFixed(1)}</td>
-              <td className="p-2 text-center">{inv.date}</td>
+      <h1 className="text-2xl font-bold mb-4">Stock & Purchase Record</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 bg-white shadow-md rounded-lg">
+          <thead className="bg-gray-200">
+            <tr>
+              {["Date", "Product Name", "Stock In", "Total Stock", "Purchase Amount"].map((header, index) => (
+                <th key={index} className="px-4 py-2 border text-left font-semibold">
+                  {header}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {buyrecords.map((record, index) => (
+              <tr key={index} className="border hover:bg-gray-100">
+                <td className="px-4 py-2 border">{record.date}</td>
+                <td className="px-4 py-2 border">{record.productName}</td>
+                <td className="px-4 py-2 border">{record.stockIn}</td>
+                <td className="px-4 py-2 border">{record.totalStock}</td>
+                <td className="px-4 py-2 border">${record.purchase}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
