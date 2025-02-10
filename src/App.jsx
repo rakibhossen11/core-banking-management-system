@@ -1,35 +1,17 @@
-import React from 'react';
-import Profile from './Routes/PageRoutes/ProfilePage/Profile';
-import TransectionForm from './Routes/PageRoutes/Transaction/TransectionForm';
-import Transections from './Routes/PageRoutes/Transaction/Transections';
-import FinancialTables from './redux/Tables/FinancialTables';
-import Stock from './Routes/Stock/Stock';
-import StockInForm from './Routes/Stock/StockInForm';
-import { useDispatch } from 'react-redux';
-import StockTable from './Routes/Stock/StockTable';
-import Input from './components/ui/Input';
-import Table from './components/ui/Table';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProductList from "./components/Lists/ProductList";
+import ProductAdd from "./components/Form/ProductAdd";
 
 function App() {
-  const dispatch = useDispatch();
-  
-
-  const handleSubmit = (e) =>{
-
-  };
-
   return (
-    <div>
-     {/* <Profile /> */}
-     {/* <Transections /> */}
-     <FinancialTables />
-     <Stock />
-     <StockTable />
-     <Table />
-     {/* <TableHea */}
-     {/* <Input /> */}
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<ProductList />} />
+        <Route path="/addProduct" element={<ProductAdd />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
