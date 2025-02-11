@@ -4,14 +4,14 @@ const initialState = {
   products: [
     {
       id: 101,
-      productId: 101,
-      productName: "abc",
+      uniqId: 101,
+      name: "Gp-10",
       category: "Card",
       stockQuantity: 12,
       supplier: "Gp",
       purchasePrice: 12,
-      sellingPrice: 13,
-      unitOfMeasure: "Pcs",
+      sellprice: 13,
+      unit: "Pcs",
       salesCount: 13,
       stockIn: 12,
       stockOut: 4,
@@ -21,14 +21,14 @@ const initialState = {
     },
     {
       id: 101,
-      productId: 101,
-      productName: "abc",
+      uniqId: 102,
+      name: "abc",
       category: "Card",
       stockQuantity: 12,
       supplier: "Gp",
       purchasePrice: 12,
-      sellingPrice: 13,
-      unitOfMeasure: "Pcs",
+      sellprice: 13,
+      unit: "Pcs",
       salesCount: 13,
       stockIn: 12,
       stockOut: 4,
@@ -38,14 +38,14 @@ const initialState = {
     },
     {
       id: 101,
-      productId: 101,
-      productName: "abc",
+      uniqId: 103,
+      name: "abc",
       category: "Card",
       stockQuantity: 12,
       supplier: "Gp",
       purchasePrice: 12,
-      sellingPrice: 13,
-      unitOfMeasure: "Pcs",
+      sellprice: 13,
+      unit: "Pcs",
       salesCount: 13,
       stockIn: 12,
       stockOut: 4,
@@ -55,14 +55,14 @@ const initialState = {
     },
     {
       id: 101,
-      productId: 101,
-      productName: "abc",
+      uniqId: 104,
+      name: "abc",
       category: "Card",
       stockQuantity: 12,
       supplier: "Gp",
       purchasePrice: 12,
-      sellingPrice: 13,
-      unitOfMeasure: "Pcs",
+      sellprice: 13,
+      unit: "Pcs",
       salesCount: 13,
       stockIn: 12,
       stockOut: 4,
@@ -72,14 +72,14 @@ const initialState = {
     },
     {
       id: 101,
-      productId: 101,
-      productName: "abc",
+      uniqId: 105,
+      name: "abc",
       category: "Card",
       stockQuantity: 12,
       supplier: "Gp",
       purchasePrice: 12,
-      sellingPrice: 13,
-      unitOfMeasure: "Pcs",
+      sellprice: 13,
+      unit: "Pcs",
       salesCount: 13,
       stockIn: 12,
       stockOut: 4,
@@ -89,14 +89,14 @@ const initialState = {
     },
     {
       id: 101,
-      productId: 101,
-      productName: "abc",
+      uniqId: 106,
+      name: "abc",
       category: "Card",
       stockQuantity: 12,
       supplier: "Gp",
       purchasePrice: 12,
-      sellingPrice: 13,
-      unitOfMeasure: "Pcs",
+      sellprice: 13,
+      unit: "Pcs",
       salesCount: 13,
       stockIn: 12,
       stockOut: 4,
@@ -119,8 +119,8 @@ const productSlice = createSlice({
     },
     // reducer for buying product
     buyProduct: (state, action) => {
-        const {productId,quantity,date} = action.payload;
-        const product = state.products.find((p) => p.pid === productId);
+        const {uniqId,quantity,date} = action.payload;
+        const product = state.products.find((p) => p.pid === uniqId);
         if(product){
             // updata stock quantity and instock
             product.stockQuantity += quantity;
@@ -132,8 +132,8 @@ const productSlice = createSlice({
     },
     // redcer for selling product
     sellProduct: (state,action) => {
-        const {productId,quantity,date} = action.payload;
-        const product = state.products.find((p) => p.pid === productId);
+        const {uniqId,quantity,date} = action.payload;
+        const product = state.products.find((p) => p.pid === uniqId);
         if(product){
             // updata stock quantity and instock
             product.stockQuantity += quantity;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductList = () => {
   const products = useSelector((state) => state.product.products);
@@ -18,12 +18,12 @@ const ProductList = () => {
               {[
                 "Product ID",
                 "Product Name",
-                "Category",
+                // "Category",
                 "Stock Quantity",
+                "Unit of Measure",
                 "Supplier",
                 "Purchase Price",
                 "Selling Price",
-                "Unit of Measure",
                 "Sales Count",
                 "Stock In",
                 "Stock Out",
@@ -42,14 +42,14 @@ const ProductList = () => {
           <tbody>
             {products.map((product, index) => (
               <tr key={index} className="border hover:bg-gray-100">
-                <td className="px-4 py-2 border">{product.productId}</td>
-                <td className="px-4 py-2 border">{product.productName}</td>
-                <td className="px-4 py-2 border">{product.category}</td>
+                <td className="px-4 py-2 border">{product.uniqId}</td>
+                <td className="px-4 py-2 border">{product.name}</td>
+                {/* <td className="px-4 py-2 border">{product.category}</td> */}
                 <td className="px-4 py-2 border">{product.stockQuantity}</td>
+                <td className="px-4 py-2 border">{product.unit}</td>
                 <td className="px-4 py-2 border">{product.supplier}</td>
                 <td className="px-4 py-2 border">${product.purchasePrice}</td>
-                <td className="px-4 py-2 border">${product.sellingPrice}</td>
-                <td className="px-4 py-2 border">{product.unitOfMeasure}</td>
+                <td className="px-4 py-2 border">${product.sellprice}</td>
                 <td className="px-4 py-2 border">{product.salesCount}</td>
                 <td className="px-4 py-2 border">{product.stockIn}</td>
                 <td className="px-4 py-2 border">{product.stockOut}</td>
@@ -57,7 +57,7 @@ const ProductList = () => {
                 <td>
                     <div><p>Buy</p></div>
                     <div><p>Sell</p></div>
-                    <div><p>Update</p></div>
+                    <Link to={`/product/${product.uniqId}`}><p>Update</p></Link>
                 </td>
               </tr>
             ))}

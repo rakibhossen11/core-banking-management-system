@@ -50,7 +50,6 @@ const ProductAdd = () => {
       className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-6">Buy Product</h2>
-      <h1 className="text-2xl font-bold mb-6">Product add form in under maintainance...</h1>
 
       {/* Products select name */}
       <div className="mb-4">
@@ -110,14 +109,21 @@ const ProductAdd = () => {
         onChange={(e) => setCategory(e.target.value)}
         placeholder="Set a Category"
       />
-      <Input
+      <InputSelect
+          label="Select a Unit"
+          id="Unit"
+          options={products}
+          value={name}
+          onChange={(e) => setUnit(e.target.value)}
+        />
+      {/* <Input
         label="Unit"
         name="Unit"
         value={unit}
         type="number"
         onChange={(e) => setUnit(e.target.value)}
         placeholder="Unit"
-      />
+      /> */}
 
       <button
         type="submit"
