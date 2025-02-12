@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/feature/productSlice";
 import Input from "../ui/Input";
+import InputSelect from "../ui/InputSelect";
 
 const ProductAdd = () => {
-    const products = useSelector((state) => state.product.products);
-    console.log(products);
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [uniqId, setuniqId] = useState("");
   const [category, setCategory] = useState("");
@@ -14,24 +13,50 @@ const ProductAdd = () => {
   const [purchasePrice, setpurchasePrice] = useState("");
   const [sellprice, setsellPrice] = useState("");
   const [unit, setUnit] = useState("");
+  const products = useSelector((state) => state.product.products);
+  console.log(products);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(uniqId, name, category, supplier, purchasePrice, sellprice, unit);
-    if (!uniqId || !name || !category || !supplier || !purchasePrice || !sellprice || !unit) {
-        console.log(uniqId, name, category, supplier, purchasePrice, sellprice, unit);
+    console.log(
+      uniqId,
+      name,
+      category,
+      supplier,
+      purchasePrice,
+      sellprice,
+      unit
+    );
+    if (
+      !uniqId ||
+      !name ||
+      !category ||
+      !supplier ||
+      !purchasePrice ||
+      !sellprice ||
+      !unit
+    ) {
+      console.log(
+        uniqId,
+        name,
+        category,
+        supplier,
+        purchasePrice,
+        sellprice,
+        unit
+      );
       alert("Please fill all fields!");
       return;
     }
 
     const products = {
-        uniqId: parseInt(uniqId), 
-        name: name, 
-        category: category, 
-        supplier: supplier, 
-        purchasePrice: parseFloat(purchasePrice), 
-        sellprice: parseFloat(sellprice), 
-        unit: parseInt(unit),
+      uniqId: parseInt(uniqId),
+      name: name,
+      category: category,
+      supplier: supplier,
+      purchasePrice: parseFloat(purchasePrice),
+      sellprice: parseFloat(sellprice),
+      unit: parseInt(unit),
     };
     console.log(products);
     dispatch(addProduct(products));
@@ -54,12 +79,12 @@ const ProductAdd = () => {
       {/* Products select name */}
       <div className="mb-4">
         <Input
-        label="Product Name"
-        name="Product Name"
-        value={name}
-        type=""
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Product Name"
+          label="Product Name"
+          name="Product Name"
+          value={name}
+          type=""
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Product Name"
         />
         {/* <InputSelect
           label="Select a Product"
@@ -110,12 +135,12 @@ const ProductAdd = () => {
         placeholder="Set a Category"
       />
       <InputSelect
-          label="Select a Unit"
-          id="Unit"
-          options={products}
-          value={name}
-          onChange={(e) => setUnit(e.target.value)}
-        />
+        label="Select a Unit"
+        id="Unit"
+        options={products}
+        value={name}
+        onChange={(e) => setUnit(e.target.value)}
+      />
       {/* <Input
         label="Unit"
         name="Unit"

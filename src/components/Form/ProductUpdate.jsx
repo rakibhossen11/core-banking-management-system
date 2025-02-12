@@ -1,22 +1,49 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import Input from '../ui/Input';
-import InputSelect from '../ui/InputSelect';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { updateProduct } from "../../redux/feature/productSlice";
+import Input from "../ui/Input";
+import InputSelect from "../ui/InputSelect";
 
 const ProductUpdate = () => {
-    const {uniqId} = useParams(); // Get the productId from the URL
-    console.log(uniqId);
-    const product = useSelector((state) => state.product.products.find((p) => p.uniqId === parseInt(uniqId)));
-    console.log(product);
+  const { uniqId } = useParams(); // Get the productId from the URL
+  const dispatch = useDispatch(); // for product update redux
+  console.log(uniqId);
+  //   get product form the redux store
+  const product = useSelector((state) =>
+    state.product.products.find((p) => p.uniqId === parseInt(uniqId))
+  );
+  console.log(product);
+  // Initialize form state with the product's current values
+  const [name, setName] = useState("");
+  //   const [uniqId, setuniqId] = useState("");
+  const [category, setCategory] = useState("");
+  const [supplier, setSupplier] = useState("");
+  const [purchasePrice, setpurchasePrice] = useState("");
+  const [sellprice, setsellPrice] = useState("");
+  const [unit, setUnit] = useState("");
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        console.log(uniqId);
-    }
+  // Update form state if the product changes
 
-    return (
-        <form
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newProduct = {
+      uniqId: parseInt(uniqId),
+      name: name,
+      category: category,
+      supplier: supplier,
+      purchasePrice: parseFloat(purchasePrice),
+      sellprice: parseFloat(sellprice),
+      unit: parseInt(unit),
+    };
+    console.log(newProduct);
+    console.log(updateProduct({ id: uniqId, updata: newProduct }));
+    dispatch(updateProduct({ id: uniqId, updata: newProduct }));
+  };
+
+  return (
+    <form
       onSubmit={handleSubmit}
       className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg"
     >
@@ -25,12 +52,12 @@ const ProductUpdate = () => {
       {/* Products select name */}
       <div className="mb-4">
         <Input
-        label="Product Name"
-        name="Product Name"
-        value={product.name}
-        type=""
-        // onChange={(e) => setName(e.target.value)}
-        placeholder="Product Name"
+          label="Product Name"
+          name="Product Name"
+          value={name}
+          type=""
+          onChange={(e) => setName(e.target.value)}
+          placeholder={product.name}
         />
         {/* <InputSelect
           label="Select a Product"
@@ -43,42 +70,42 @@ const ProductUpdate = () => {
       <Input
         label="Uniq Id"
         name="Uniq Id"
-        value={product.uniqId}
+        value={uniqId}
         type="number"
-        // onChange={(e) => setuniqId(e.target.value)}
-        placeholder="Set a Uniq Id"
+        onChange={(e) => setName(e.target.value)}
+        placeholder={uniqId}
       />
       <Input
         label="Supplier"
         name="Supplier"
-        value={product.supplier}
+        value={supplier}
         type=""
-        // onChange={(e) => setSupplier(e.target.value)}
-        placeholder="Supplier "
+        onChange={(e) => setSupplier(e.target.value)}
+        placeholder={product.supplier}
       />
       <Input
         label="Purchase Price"
         name="Purchase Price"
-        value={product.purchasePrice}
+        value={purchasePrice}
         type="number"
-        // onChange={(e) => setpurchasePrice(e.target.value)}
-        placeholder="Purchase Price"
+        onChange={(e) => setpurchasePrice(e.target.value)}
+        placeholder={product.purchasePrice}
       />
       <Input
         label="Selling Price"
         name="Selling Price"
-        value={product.sellprice}
+        value={sellprice}
         type="number"
-        // onChange={(e) => setsellPrice(e.target.value)}
-        placeholder="Selling Price"
+        onChange={(e) => setsellPrice(e.target.value)}
+        placeholder={product.sellprice}
       />
       <Input
         label="Category"
         name="Category"
-        value={product.category}
+        value={category}
         type=""
-        // onChange={(e) => setCategory(e.target.value)}
-        placeholder="Set a Category"
+        onChange={(e) => setCategory(e.target.value)}
+        placeholder={product.category}
       />
       {/* <InputSelect
           label="Select a Unit"
@@ -103,7 +130,7 @@ const ProductUpdate = () => {
         Update Product
       </button>
     </form>
-    );
+  );
 };
 
 export default ProductUpdate;

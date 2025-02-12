@@ -117,6 +117,18 @@ const productSlice = createSlice({
       console.log(action.payload);
       state.products.push(action.payload);
     },
+    // reducer for update product
+    updateProduct: (state,action) =>{
+      const { id, updateData } = action.payload; // id of the product to update and the new data
+      const productIndex = state.products.findIndex((product) => product.uniqId === id);
+      if(productIndex !== -1){
+        // update the product with the new data
+        state.products[productIndex] = {
+          ...state.products[productIndex], // Keep existing data
+          ...updateData, // Override with updated data
+        }
+      }
+    },
     // reducer for buying product
     buyProduct: (state, action) => {
         const {uniqId,quantity,date} = action.payload;
@@ -145,5 +157,5 @@ const productSlice = createSlice({
   },
 });
  
-export const { addProduct,buyProduct,sellProduct } = productSlice.actions; //export action
+export const { addProduct, updateProduct, buyProduct,sellProduct } = productSlice.actions; //export action
 export default productSlice.reducer; //export redcer

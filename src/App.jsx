@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductList from "./components/Lists/ProductList";
 import ProductAdd from "./components/Form/ProductAdd";
 import ProductUpdate from "./components/Form/ProductUpdate";
+import BuySellForm from "./components/Form/BuySellForm";
 
 function App() {
   return (
@@ -10,8 +11,9 @@ function App() {
       <Routes>
         {/* route for the prodct list page */}
         <Route path="/" element={<ProductList />} />
+        <Route path="/buy&sell/:uniqId" element={<BuySellForm />} />
         {/* route for the product detail page */}
-        <Route path="/product/:uniqId" element={<ProductUpdate />} />
+        {/* <Route path="/product/:uniqId" element={<ProductUpdate />} /> */}
         <Route path="/addProduct" element={<ProductAdd />} />
       </Routes>
     </Router>
