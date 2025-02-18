@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/feature/productSlice";
 import Input from "../ui/Input";
 import InputSelect from "../ui/InputSelect";
+import Swal from "sweetalert2";
 
 const ProductAdd = () => {
   const dispatch = useDispatch();
@@ -60,8 +61,26 @@ const ProductAdd = () => {
     };
     console.log(products);
     dispatch(addProduct(products));
-    // console.log(dispatch(addStock(stock)));
-    // console.log(dispatch(addProduct(products)));
+    fetch("http://localhost:5000/products", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(products),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Coffee added successfully",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
+        }
+      }
+    );
 
     // reset form
     // setName("");

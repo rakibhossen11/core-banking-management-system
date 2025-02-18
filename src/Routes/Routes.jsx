@@ -3,6 +3,7 @@ import Main from "../layout/Main";
 import ProductList from "../components/Lists/ProductList";
 import UserForm from "../components/Form/UserForm";
 import UserTable from "../components/Tables/UserTable";
+import ProductAdd from "../components/Form/ProductAdd";
 
 const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <ProductList />
+            },
+            {
+                path: '/addProducts',
+                element: <ProductAdd />
             },
             {
                 path: '/userForm',
