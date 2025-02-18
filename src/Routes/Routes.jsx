@@ -4,6 +4,7 @@ import ProductList from "../components/Lists/ProductList";
 import UserForm from "../components/Form/UserForm";
 import UserTable from "../components/Tables/UserTable";
 import ProductAdd from "../components/Form/ProductAdd";
+import Dashboard from "../DashBoard/Dashboard";
 
 const router = createBrowserRouter([
     {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
         children:[
             {
                 path: '/',
-                element: <ProductList />
+                element: <Dashboard />
             },
             {
                 path: '/addProducts',
