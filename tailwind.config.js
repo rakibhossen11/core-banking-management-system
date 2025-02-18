@@ -1,5 +1,6 @@
 const flowbite = require("flowbite-react/tailwind");
 const withMT = require("@material-tailwind/react/utils/withMT");
+import { mtConfig } from "@material-tailwind/react";
 
 
 /** @type {import('tailwindcss').Config} */
@@ -13,9 +14,15 @@ const withMT = require("@material-tailwind/react/utils/withMT");
 
  
 module.exports = withMT({
-  content: [flowbite.content(),"./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: [
+    flowbite.content(),
+    "./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./node_modules/@material-tailwind/react/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    fontFamily:{
+      hambra: ['Hammersmith One', 'sans-serif'],
+      signika: ['Signika', 'sans-serif'],
+    }
   },
-  plugins: [flowbite.plugin(),],
+  plugins: [flowbite.plugin()],
 });
