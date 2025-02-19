@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
+import { Button } from "flowbite-react";
 
 const ProductList = () => {
   const products = useSelector((state) => state.product.products);
@@ -26,7 +27,7 @@ const ProductList = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Stock Management</h1>
-      <p onClick={() => navigate("/addProduct")}>New Product add</p>
+      <Link to={"/addProducts"}><Button pill>New Product add</Button></Link>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 bg-white shadow-md rounded-lg">
           <thead className="bg-gray-200">
@@ -91,6 +92,12 @@ const ProductList = () => {
                     onClick={() => openModal(product, "sell")}
                   >
                     Sell
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                    onClick={() => openModal(product, "Delete")}
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>
