@@ -100,12 +100,13 @@ const ProductList = () => {
                   >
                     Sell
                   </button>
-                  {/* <button
+                  <Link to={`/product&Details/${product._id}`}>
+                  <button
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
-                    onClick={() => openModal(product, "Delete")}
                   >
-                    Delete
-                  </button> */}
+                    see
+                  </button>
+                  </Link>
                 </td>
               </tr>
             ))}

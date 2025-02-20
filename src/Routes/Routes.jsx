@@ -6,6 +6,7 @@ import UserTable from "../components/Tables/UserTable";
 import ProductAdd from "../components/Form/ProductAdd";
 import Dashboard from "../DashBoard/Dashboard";
 import SignIn from "../authentication/SignIn";
+import ProductDetails from "../components/Details/ProductDetails";
 
 const router = createBrowserRouter([
     {
@@ -21,8 +22,13 @@ const router = createBrowserRouter([
                 element: <ProductList />
             },
             {
-                path: '/addProducts',
-                element: <ProductAdd />
+                path: '/products',
+                element: <ProductList />
+            },
+            {
+                path: '/product&Details/:id',
+                element: <ProductDetails />,
+                loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
             },
             {
                 path: '/userForm',
