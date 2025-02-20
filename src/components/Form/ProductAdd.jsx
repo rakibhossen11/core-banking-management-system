@@ -12,7 +12,7 @@ const ProductAdd = () => {
   const [purchasePrice, setpurchasePrice] = useState("");
   const [sellprice, setsellPrice] = useState("");
   // const [unit, setUnit] = useState("");
-  const products = useSelector((state) => state.product.products);
+  const products = useSelector((state) => state.products);
   console.log(products);
 
   const handleSubmit = (e) => {
@@ -24,7 +24,7 @@ const ProductAdd = () => {
       supplier,
       purchasePrice,
       sellprice,
-      unit
+      // unit
     );
     if (
       !uniqId ||
@@ -53,7 +53,7 @@ const ProductAdd = () => {
       supplier: supplier,
       purchasePrice: parseFloat(purchasePrice),
       sellprice: parseFloat(sellprice),
-      unit: parseInt(unit),
+      // unit: parseInt(unit),
     };
     console.log(products);
     dispatch(addProduct(products));

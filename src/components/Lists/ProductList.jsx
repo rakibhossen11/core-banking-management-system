@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts,buyProduct,sellProduct } from "../../redux/feature/productSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import { Button } from "flowbite-react";
 
 const ProductList = () => {
-  const products = useSelector((state) => state.product.products);
-  const navigate = useNavigate();
+  // const [products,setProducts] = useState([]);
+  const dispatch = useDispatch(); 
+  const { products, loading, error } = useSelector((state) => state.products);
+  console.log(products);
+  // const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalType, setModalType] = useState(null); // 'buy' or 'sell'
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +27,18 @@ const ProductList = () => {
       `✅ ${modalType === "buy" ? "Bought" : "Sold"} ${orderData.quantity} ${orderData.product}(s) for $${orderData.total}`
     );
   };
+
+  useEffect(() =>{
+    dispatch(fetchProducts());
+  },[dispatch]);
+
+  // useEffect(() => {
+  //   fetch('http://localhost:5000/products')
+  //   .then(res => res.json())
+  //   .then(data => setProducts(data))
+  // }, []);
+
+  console.log("Products from Redux:", products);
 
   return (
     <div>
@@ -45,7 +61,7 @@ const ProductList = () => {
                 "Stock In",
                 "Stock Out",
                 "Remarks / Notes",
-                "Edit",
+                "Action",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -71,34 +87,25 @@ const ProductList = () => {
                 <td className="px-4 py-2 border">{product.stockIn}</td>
                 <td className="px-4 py-2 border">{product.stockOut}</td>
                 <td className="px-4 py-2 border">{product.remarks}</td>
-                <td>
-                  <div>
-                    <p>Buy</p>
-                  </div>
-                  <Link to={`/buy&sell/${product.uniqId}`}>
-                    <p>Sell</p>
-                  </Link>
-                  {/* <Link to={`/product/${product.uniqId}`}><p>Update</p></Link> */}
-                </td>
                 <td className="flex gap-2 mt-3">
-                  <button
+                  {/* <button
                     className="px-4 py-2 bg-green-500 text-white rounded-lg"
                     onClick={() => openModal(product, "buy")}
                   >
                     Buy
-                  </button>
+                  </button> */}
                   <button
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => openModal(product, "sell")}
                   >
                     Sell
                   </button>
-                  <button
+                  {/* <button
                     className="px-4 py-2 bg-red-500 text-white rounded-lg"
                     onClick={() => openModal(product, "Delete")}
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}

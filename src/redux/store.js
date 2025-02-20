@@ -7,6 +7,6 @@ export const store = configureStore({
     reducer: {
         banking: bankingReducer,
         stock:  stockReducer,
-        product: productReducer,
+        products: productReducer,
     }
 });
