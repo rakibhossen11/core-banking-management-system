@@ -10,6 +10,7 @@ const ProductAdd = () => {
   const [category, setCategory] = useState("");
   const [supplier, setSupplier] = useState("");
   const [purchasePrice, setpurchasePrice] = useState("");
+  const [stock,setStock] = useState("");
   const [sellprice, setsellPrice] = useState("");
   // const [unit, setUnit] = useState("");
   const products = useSelector((state) => state.products);
@@ -92,6 +93,14 @@ const ProductAdd = () => {
         type=""
         onChange={(e) => setSupplier(e.target.value)}
         placeholder="Supplier "
+      />
+      <Input
+        label="Stock"
+        name="Stock"
+        value={stock}
+        type=""
+        onChange={(e) => setStock(e.target.value)}
+        placeholder="Stock "
       />
       <Input
         label="Purchase Price"

@@ -27,16 +27,25 @@ export const fetchProducts = createAsyncThunk(
   }
 });
 
+// Async thunk to fetch product details by ID
+// export const fetchProductDetails = createAsyncThunk(
+//   'products/fetchProductDetails',
+//   async (productId) => {
+//     const response = await axios.get(`http://localhost:5000/products/${productId}`);
+//     return response.data;
+//   }
+// );
+
 // Async thunk to buy a product
 export const buyProduct = createAsyncThunk(
-  'product/buyProduct',
-  async ({ productId, quantity, date }, { rejectWithValue }) => {
+  'products/buyProduct',
+  async ({ productId, quantity }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:5000/products/buy', {
+      const response = await axios.post('http://localhost:5000/products/buy/', {
         productId,
         quantity,
-        date,
       });
+      console.log(response);
       return response.data.product;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -186,6 +195,7 @@ const productSlice = createSlice({
     })
     .addCase(buyProduct.fulfilled, (state, action) => {
       const updatedProduct = action.payload;
+      console.log(updatedProduct);
       const index = state.products.findIndex((p) => p._id === updatedProduct._id);
       if (index !== -1) {
         state.products[index] = updatedProduct;
