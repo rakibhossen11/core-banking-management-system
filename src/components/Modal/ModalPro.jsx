@@ -36,6 +36,22 @@ const ModalPro = () => {
     });
   };
 
+  const handleSell = (e) => {
+    e.preventDefault();
+    console.log(uniqId, parseQuantity);
+    const quantity = parseInt(parseQuantity);
+    const sell = { uniqId, quantity };
+    console.log(sell);
+    // dispatch(buyProduct(buy));
+    fetch("http://localhost:5000/products/sell", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(sell),
+    });
+  };
+
   return (
     <div>
       <form onSubmit={handleBuy} className="space-y-6">
@@ -81,7 +97,7 @@ const ModalPro = () => {
           <Button type="submit">Buy This Product</Button>
         </div>
       </form>
-      <form onSubmit={handleBuy} className="space-y-6">
+      <form onSubmit={handleSell} className="space-y-6">
         <h3 className="text-xl font-medium text-gray-900 dark:text-white">
           You want to Buy Something
         </h3>
@@ -121,7 +137,7 @@ const ModalPro = () => {
           />
         </div>
         <div className="w-full">
-          <Button type="submit">Buy This Product</Button>
+          <Button type="submit">Sell This Product</Button>
         </div>
       </form>
     </div>

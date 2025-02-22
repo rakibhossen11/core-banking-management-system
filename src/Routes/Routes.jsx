@@ -8,6 +8,7 @@ import Dashboard from "../DashBoard/Dashboard";
 import SignIn from "../authentication/SignIn";
 import ProductDetails from "../components/Details/ProductDetails";
 import ModalPro from "../components/Modal/ModalPro";
+import ProductUpdate from "../components/Form/ProductUpdate";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
             {
                 path: '/product&Details/:id',
                 element: <ProductDetails />,
+                loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
+            },
+            {
+                path: '/product&update/:id',
+                element: <ProductUpdate />,
                 loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
             },
             {

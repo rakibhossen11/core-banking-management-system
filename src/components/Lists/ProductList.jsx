@@ -96,6 +96,9 @@ const ProductList = () => {
                   <Link to={`/buy&sell/${product._id}`}>
                     <Button>Buy</Button>
                   </Link>
+                  <Link to={`/buy&sell/${product._id}`}>
+                    <Button color="failure">Sell</Button>
+                  </Link>
                   <Link to={`/product&Details/${product._id}`}>
                     <button className="px-4 py-2 bg-red-500 text-white rounded-lg">
                       see
