@@ -10,7 +10,7 @@ const ProductAdd = () => {
   const [category, setCategory] = useState("");
   const [supplier, setSupplier] = useState("");
   const [purchasePrice, setpurchasePrice] = useState("");
-  const [stock,setStock] = useState("");
+  const [stockQuantity,setStockQuantity] = useState(0);
   const [sellprice, setsellPrice] = useState("");
   // const [unit, setUnit] = useState("");
   const products = useSelector((state) => state.products);
@@ -25,6 +25,7 @@ const ProductAdd = () => {
       supplier,
       purchasePrice,
       sellprice,
+      stockQuantity,
       // unit
     );
     if (
@@ -33,7 +34,8 @@ const ProductAdd = () => {
       !category ||
       !supplier ||
       !purchasePrice ||
-      !sellprice 
+      !sellprice ||
+      !stockQuantity
     ) {
       console.log(
         uniqId,
@@ -42,6 +44,7 @@ const ProductAdd = () => {
         supplier,
         purchasePrice,
         sellprice,
+        stockQuantity,
       );
       alert("Please fill all fields!");
       return;
@@ -54,6 +57,7 @@ const ProductAdd = () => {
       supplier: supplier,
       purchasePrice: parseFloat(purchasePrice),
       sellprice: parseFloat(sellprice),
+      stockQuantity: parseInt(stockQuantity),
       // unit: parseInt(unit),
     };
     console.log(products);
@@ -97,9 +101,9 @@ const ProductAdd = () => {
       <Input
         label="Stock"
         name="Stock"
-        value={stock}
+        value={stockQuantity}
         type=""
-        onChange={(e) => setStock(e.target.value)}
+        onChange={(e) => setStockQuantity(e.target.value)}
         placeholder="Stock "
       />
       <Input
