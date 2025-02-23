@@ -4,7 +4,7 @@ import SideNav from "./SideNav";
 
 const Main = () => {
   return (
-    <div className="flex items-center">
+    <div className="flex">
       <div>
         <SideNav />
       </div>

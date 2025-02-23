@@ -84,7 +84,7 @@ const ProductList = () => {
                 <td className="px-4 py-2 border">{product.name}</td>
                 {/* <td className="px-4 py-2 border">{product.category}</td> */}
                 <td className="px-4 py-2 border">{product.stockQuantity}</td>
-                <td className="px-4 py-2 border">{product.stockQuantity * 10}</td>
+                <td className="px-4 py-2 border">{product.unit}</td>
                 <td className="px-4 py-2 border">{product.supplier}</td>
                 <td className="px-4 py-2 border">${product.purchasePrice}</td>
                 <td className="px-4 py-2 border">${product.sellprice}</td>
@@ -92,11 +92,11 @@ const ProductList = () => {
                 <td className="px-4 py-2 border">{product.stockIn}</td>
                 <td className="px-4 py-2 border">{product.stockOut}</td>
                 <td className="px-4 py-2 border">{product.remarks}</td>
-                <td className="flex gap-2 mt-3">
-                  <Link to={`/buy&sell/${product._id}`}>
+                <td className="flex flex-col gap-2 mt-3">
+                  <Link to={`/buy/${product._id}`}>
                     <Button>Buy</Button>
                   </Link>
-                  <Link to={`/buy&sell/${product._id}`}>
+                  <Link to={`/sell/${product._id}`}>
                     <Button color="failure">Sell</Button>
                   </Link>
                   <Link to={`/product&Details/${product._id}`}>

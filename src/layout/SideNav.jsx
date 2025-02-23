@@ -1,19 +1,31 @@
 import { useState } from "react";
-import { Button, Drawer, Sidebar, TextInput } from "flowbite-react";
+import { Sidebar, Dropdown, Avatar, TextInput } from "flowbite-react";
 import {
   HiChartPie,
+  HiViewBoards,
+  HiInbox,
+  HiUser,
+  HiShoppingBag,
+  HiArrowSmRight,
+  HiArrowSmLeft,
+  HiTable,
+  HiSearch,
+  HiUsers,
+  HiLogin,
+  HiPencil,
   HiClipboard,
   HiCollection,
   HiInformationCircle,
-  HiLogin,
-  HiPencil,
-  HiSearch,
-  HiShoppingBag,
-  HiUsers,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 const SideNav = () => {
+  const [activeItem, setActiveItem] = useState("products");
+
+  const handleItemClick = (item) => {
+    setActiveItem(item);
+  };
+
   return (
     <div>
       <Sidebar
@@ -34,13 +46,28 @@ const SideNav = () => {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 <Link to={"/"}>
-                  <Sidebar.Item icon={HiChartPie}>Dashboard</Sidebar.Item>
+                  <Sidebar.Item
+                    active={activeItem === "/"}
+                    onClick={() => handleItemClick("/")}
+                    icon={HiChartPie}
+                  >
+                    Dashboard
+                  </Sidebar.Item>
                 </Link>
                 <Link to={"/products"}>
-                  <Sidebar.Item icon={HiShoppingBag}>Products</Sidebar.Item>
+                  <Sidebar.Item
+                    active={activeItem === "products"}
+                    onClick={() => handleItemClick("products")}
+                    icon={HiShoppingBag}
+                  >
+                    Products
+                  </Sidebar.Item>
                 </Link>
                 <Link to={"/usertable"}>
-                  <Sidebar.Item icon={HiUsers}>Users list</Sidebar.Item>
+                  <Sidebar.Item 
+                  active={activeItem === "usertable"}
+                  onClick={() => handleItemClick("usertable")} 
+                  icon={HiUsers}>Users list</Sidebar.Item>
                 </Link>
                 <Sidebar.Item href="/authentication/sign-in" icon={HiLogin}>
                   Sign in
@@ -50,22 +77,13 @@ const SideNav = () => {
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
-                <Sidebar.Item
-                  href="https://github.com/themesberg/flowbite-react/"
-                  icon={HiClipboard}
-                >
+                <Sidebar.Item href="" icon={HiClipboard}>
                   Docs
                 </Sidebar.Item>
-                <Sidebar.Item
-                  href="https://flowbite-react.com/"
-                  icon={HiCollection}
-                >
+                <Sidebar.Item href="" icon={HiCollection}>
                   Components
                 </Sidebar.Item>
-                <Sidebar.Item
-                  href="https://github.com/themesberg/flowbite-react/issues"
-                  icon={HiInformationCircle}
-                >
+                <Sidebar.Item href="" icon={HiInformationCircle}>
                   Help
                 </Sidebar.Item>
               </Sidebar.ItemGroup>

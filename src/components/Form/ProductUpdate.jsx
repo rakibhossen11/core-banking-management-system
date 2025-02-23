@@ -66,7 +66,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setName(e.target.value)}
           placeholder={products.name}
-          required
         />
       </div>
       <div>
@@ -78,7 +77,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setSupplier(e.target.value)}
           placeholder={products.supplier}
-          required
         />
       </div>
       <div>
@@ -90,7 +88,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setCategory(e.target.value)}
           placeholder={products.category}
-          required
         />
       </div>
       <div>
@@ -102,7 +99,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setuniqId(e.target.value)}
           placeholder={products.uniqId}
-          required
         />
       </div>
       <div>
@@ -114,7 +110,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setpurchasePrice(e.target.value)}
           placeholder={products.purchasePrice}
-          required
         />
       </div>
       <div>
@@ -126,7 +121,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setsellPrice(e.target.value)}
           placeholder={products.sellprice}
-          required
         />
       </div>
       <div>
@@ -138,7 +132,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setStockQuantity(e.target.value)}
           placeholder={products.stockQuantity}
-          required
         />
       </div>
       <div>
@@ -150,7 +143,6 @@ const ProductUpdate = () => {
           type=""
           onChange={(e) => setUnit(e.target.value)}
           placeholder={products.unit}
-          required
         />
       </div>
       <Button type="submit">Update Product</Button>

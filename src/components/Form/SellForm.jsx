@@ -1,7 +1,9 @@
 import { Label, TextInput, Button } from "flowbite-react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLoaderData } from "react-router-dom";
 
-const BuyForm = () => {
+const SellForm = () => {
   const productDetail = useLoaderData();
   const dispatch = useDispatch();
   const [parseQuantity, setParseQuantity] = useState(1);
@@ -16,25 +18,25 @@ const BuyForm = () => {
     category,
   } = productDetail;
 
-  const handleBuy = (e) => {
+  const handleSell = (e) => {
     e.preventDefault();
     console.log(uniqId, parseQuantity);
     const quantity = parseInt(parseQuantity);
-    const buy = { uniqId, quantity };
-    console.log(buy);
+    const sell = { uniqId, quantity };
+    console.log(sell);
     // dispatch(buyProduct(buy));
-    fetch("http://localhost:5000/products/buy", {
+    fetch("http://localhost:5000/products/sell", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(buy),
+      body: JSON.stringify(sell),
     });
   };
 
   return (
     <div>
-      <form onSubmit={handleBuy} className="space-y-6">
+      <form onSubmit={handleSell} className="space-y-6">
         <h3 className="text-xl font-medium text-gray-900 dark:text-white">
           You want to Buy Something
         </h3>
@@ -74,11 +76,11 @@ const BuyForm = () => {
           />
         </div>
         <div className="w-full">
-          <Button type="submit">Buy This Product</Button>
+          <Button color="failure" type="submit">Sell This Product</Button>
         </div>
       </form>
     </div>
   );
 };
 
-export default BuyForm;
+export default SellForm;

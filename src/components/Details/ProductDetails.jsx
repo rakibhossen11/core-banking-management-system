@@ -1,11 +1,50 @@
 import React from "react";
 import { Table, Card, Dropdown } from "flowbite-react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, resolvePath, useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ProductDetails = () => {
   const productDetail = useLoaderData();
-  const {_id,unit,uniqId,supplier,sellprice,purchasePrice,name,category} = productDetail;
+  const {
+    _id,
+    unit,
+    uniqId,
+    supplier,
+    sellprice,
+    purchasePrice,
+    name,
+    category,
+    buyHistory,
+  } = productDetail;
   console.log(productDetail);
+  console.log(buyHistory);
+  const handleDelete = (id) => {
+    console.log(id);
+    // alert function
+    Swal.fire({
+      title: `You Want Delete ${name} ?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }) //after function to work and delete from database
+      .then((result) => {
+        if (result.isConfirmed) {
+          fetch(`http://localhost:5000/products/${_id}`, {
+            method: "DELETE",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.deletedCount > 0) {
+                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              }
+            });
+        }
+      });
+  };
+
   return (
     <div>
       <Card className="max-w-sm">
@@ -54,6 +93,7 @@ const ProductDetails = () => {
             </Link>
             <a
               href="#"
+              onClick={() => handleDelete(_id)}
               className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
             >
               Delete
@@ -73,24 +113,33 @@ const ProductDetails = () => {
               <span className="sr-only">Edit</span>
             </Table.HeadCell>
           </Table.Head>
-          <Table.Body className="divide-y">
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {'Apple MacBook Pro 17"'}
-              </Table.Cell>
-              <Table.Cell>Sliver</Table.Cell>
-              <Table.Cell>Laptop</Table.Cell>
-              <Table.Cell>$2999</Table.Cell>
-              <Table.Cell>
-                <a
-                  href="#"
-                  className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+          {buyHistory ? (
+            <Table.Body className="divide-y">
+              {buyHistory.map((buy, index) => (
+                <Table.Row
+                  key={index}
+                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
                 >
-                  Edit
-                </a>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {buy.date}
+                  </Table.Cell>
+                  <Table.Cell></Table.Cell>
+                  <Table.Cell>{buy.quantity}</Table.Cell>
+                  <Table.Cell></Table.Cell>
+                  <Table.Cell>
+                    <a
+                      href="#"
+                      className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                    >
+                      Edit
+                    </a>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          ) : (
+            <p>No buyHistory</p>
+          )}
         </Table>
       </div>
     </div>
