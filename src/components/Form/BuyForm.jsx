@@ -1,5 +1,7 @@
 import { Label, TextInput, Button } from "flowbite-react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLoaderData } from "react-router-dom";
 
 const BuyForm = () => {
   const productDetail = useLoaderData();

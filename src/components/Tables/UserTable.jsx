@@ -1,77 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import { Button, Table } from "flowbite-react";
+import { Button, Card, Table } from "flowbite-react";
+import Swal from "sweetalert2";
 
 const UserTable = () => {
   const users = useLoaderData();
   console.log(users);
 
+   const handleDelete = (id) => {
+    console.log(id);
+    // alert function
+    Swal.fire({
+      title: `You Want Delete ${users.name} ?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }) //after function to work and delete from database
+      .then((result) => {
+        if (result.isConfirmed) {
+          fetch(`http://localhost:5000/users/${id}`, {
+            method: "DELETE",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.deletedCount > 0) {
+                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              }
+            });
+        }
+      });
+  };
+
   return (
     <div className="overflow-x-auto">
-      <Link to={'/userForm'}><Button pill>Add New</Button></Link>
+      <Link to={"/userForm"}>
+        <Button pill>Add New</Button>
+      </Link>
       <Table>
         <Table.Head>
-        {[
-                "Name",
-                "Email",
-                "Phone",
-                "Role",
-              ].map((header, index) => (
-                <Table.HeadCell key={index}>{header}</Table.HeadCell>
-              ))}
+          {["Name", "Email", "Phone", "Role"].map((header, index) => (
+            <Table.HeadCell key={index}>{header}</Table.HeadCell>
+          ))}
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {users.map((user) => 
-          (
+          {users.map((user) => (
             <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              {user.name}
+                {user.name}
               </Table.Cell>
               <Table.Cell>{user.name}</Table.Cell>
               <Table.Cell>{user.email}</Table.Cell>
               <Table.Cell>{user.phone}</Table.Cell>
               <Table.Cell>
-                <a
-                  href="#"
-                  className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                >
-                  Edit
-                </a>
+                <Link to={`/customer&details/${user._id}`}>
+                  <button className="px-4 py-2 bg-red-500 text-white rounded-lg">
+                    see
+                  </button>
+                </Link>
+                <Button onClick={() => handleDelete(user._id)} >Delete</Button>
               </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table>
-      {/* <table className="min-w-full border border-gray-300 bg-white shadow-md rounded-lg">
-        <thead className="px-4 py-2 border text-left font-semibold">
-        <tr>
-              {[
-                "Name",
-                "Email",
-                "Phone",
-                "Role",
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  className="px-4 py-2 border text-left font-semibold"
-                >
-                  {header}
-                </th>
-              ))}
-            </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user._id} className="border hover:bg-gray-100">
-              <td className="px-4 py-2 border">{user.name}</td>
-              <td className="px-4 py-2 border">{user.email}</td>
-              <td className="px-4 py-2 border">{user.phone}</td>
-            </tr>) )}
-        </tbody>
-      </table> */}
     </div>
   );
 };

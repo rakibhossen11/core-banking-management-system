@@ -69,6 +69,12 @@ const SideNav = () => {
                   onClick={() => handleItemClick("usertable")} 
                   icon={HiUsers}>Users list</Sidebar.Item>
                 </Link>
+                <Link to={"/expenses"}>
+                  <Sidebar.Item 
+                  active={activeItem === "expenses"}
+                  onClick={() => handleItemClick("expenses")} 
+                  icon={HiUsers}>Expenses</Sidebar.Item>
+                </Link>
                 <Sidebar.Item href="/authentication/sign-in" icon={HiLogin}>
                   Sign in
                 </Sidebar.Item>

@@ -80,7 +80,7 @@ const ProductAdd = () => {
           type=""
           onChange={(e) => setName(e.target.value)}
           placeholder="Product Name"
-        />
+        /> 
       </div>
       <Input
         label="Uniq Id"

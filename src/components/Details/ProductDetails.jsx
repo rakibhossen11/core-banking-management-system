@@ -18,6 +18,8 @@ const ProductDetails = () => {
   } = productDetail;
   console.log(productDetail);
   console.log(buyHistory);
+
+  
   const handleDelete = (id) => {
     console.log(id);
     // alert function

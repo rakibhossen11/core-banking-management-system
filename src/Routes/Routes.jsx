@@ -11,6 +11,10 @@ import ModalPro from "../components/Modal/ModalPro";
 import ProductUpdate from "../components/Form/ProductUpdate";
 import BuyForm from "../components/Form/BuyForm";
 import SellForm from "../components/Form/SellForm";
+import CustomerDetail from "../Client/CustomerDetail";
+import TransactionForm from "../Client/Transaction/TransactionForm";
+import Expenses from "../Expenses/Expenses";
+import AddExpenses from "../Expenses/AddExpenses";
 
 const router = createBrowserRouter([
     {
@@ -53,15 +57,35 @@ const router = createBrowserRouter([
                 path: '/userForm',
                 element: <UserForm />
             },
-
-            {
-                path: '/signIn',
-                element: <SignIn />
-            },
             {
                 path: '/usertable',
                 element: <UserTable />,
                 loader: () => fetch('http://localhost:5000/users')
+            },
+            {
+                path: '/customer&details/:id',
+                element: <CustomerDetail />,
+                loader: (({params}) => fetch(`http://localhost:5000/users/${params.id}`))
+            },
+            {
+                path: '/transactionform/:id',
+                element: <TransactionForm />,
+                loader: ({params}) => fetch(`http://localhost:5000/users/${params.id}`)
+            },
+            // expenses related api 
+            {
+                path: '/expenses',
+                element: <Expenses />,
+                // loader: ({params}) => fetch(`http://localhost:5000/users/${params.id}`)
+            },
+            {
+                path: '/addExpenses',
+                element: <AddExpenses />,
+                // loader: ({params}) => fetch(`http://localhost:5000/users/${params.id}`)
+            },
+            {
+                path: '/signIn',
+                element: <SignIn />
             },
         ]
     }
