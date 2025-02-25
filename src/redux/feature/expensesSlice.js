@@ -19,7 +19,7 @@ export const featchExpenses = createAsyncThunk(
   "expenses/featchExpenses",
   async () => {
     const response = await axios.get("http://localhost:5000/expenses");
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   }
 );
@@ -35,10 +35,10 @@ const expensesSlice = createSlice({
         state.loading = true;
       })
       .addCase(featchExpenses.fulfilled, (state, action) => {
-        console.log('Fetched data:', action.payload); // Check if data is coming
+        // console.log('Fetched data:', action.payload); // Check if data is coming
         state.loading = false;
         state.expenses = action.payload;
-        console.log(state.expenses);
+        // console.log(state.expenses);
       })
       .addCase(featchExpenses.rejected, (state, action) => {
         state.loading = false;
