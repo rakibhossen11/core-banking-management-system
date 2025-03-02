@@ -1,34 +1,42 @@
-import { Button, Modal, Table, TextInput } from "flowbite-react";
+import { Button, Label, Modal, Select, Table, TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  featchExpenses,
+  featchExpensesMonth,
+} from "../redux/feature/expensesSlice";
 // import { Bar } from 'react-chartjs-2';
 
 const Expenses = () => {
-  //   const dispatch = useDispatch();
-  //   const { expenses, loading, error } = useSelector((state) => state.expenses);
+  const dispatch = useDispatch();
+  const { expenses, loading, error } = useSelector((state) => state.expenses);
   //   console.log(expenses);
-  const [expenses, setExpenses] = useState([]);
+  //   const [expenses, setExpenses] = useState([]);
   const [total, setTotal] = useState(0);
   //   const [page,setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [dateRange, setDateRange] = useState({ start: "", end: "" });
   const [last30Days, setLast30Days] = useState(false);
   const [page, setPage] = useState(1);
   const limit = 10;
 
-  //   useEffect(() => {
-  //     dispatch(featchExpenses());
-  //   }, []);
+  const [selectedMonth, setSelectedMonth] = useState("");
+
+  useEffect(() => {
+    dispatch(featchExpenses());
+  }, []);
 
   // fetch data
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5000/expenses");
+    const response = await axios.get("http://localhost:5000/expenses", {
+      params: { search, last30Days, page, limit },
+    });
     setExpenses(response.data);
     // console.log(response.data);
   };
 
-//   console.log(expenses);
+  //   console.log(expenses);
 
   // handle search
   const handleSearch = (e) => {
@@ -38,7 +46,7 @@ const Expenses = () => {
 
   // handle 30 days
   const handleDays = () => {
-    setDays(!last30Days);
+    setLast30Days(!last30Days);
     setPage(1);
   };
 
@@ -56,6 +64,19 @@ const Expenses = () => {
     fetchData();
   }, []);
 
+  const handleMonthChange = (e) => {
+    const month = e.target.value;
+    console.log(month);
+    // setSelectedMonth(month);
+    console.log(dispatch(featchExpensesMonth(month)));
+    dispatch(featchExpensesMonth(month));
+  };
+
+  // Fetch expenses when the selected month changes
+  useEffect(() => {
+    dispatch(featchExpensesMonth(selectedMonth));
+  }, [selectedMonth, dispatch]);
+
   return (
     <div>
       <Link to={"/addExpenses"}>
@@ -63,6 +84,31 @@ const Expenses = () => {
       </Link>
       <div className="p-5">
         <h1 className="text-3xl font-bold mb-5">Expense Tracker</h1>
+
+        <div className="max-w-md">
+          <div className="mb-2 block">
+            <Label htmlFor="countries" value="Select your country" />
+          </div>
+          <Select
+            id="months"
+            value={selectedMonth}
+            onChange={handleMonthChange}
+            required
+          >
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </Select>
+        </div>
 
         {/* Search and filter section */}
         <div className="mb-5 flex gap-4">

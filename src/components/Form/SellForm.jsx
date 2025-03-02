@@ -24,14 +24,14 @@ const SellForm = () => {
     const quantity = parseInt(parseQuantity);
     const sell = { uniqId, quantity };
     console.log(sell);
-    // dispatch(buyProduct(buy));
-    fetch("http://localhost:5000/products/sell", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(sell),
-    });
+    dispatch(buyProduct(buy));
+    // fetch("http://localhost:5000/products/sell", {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(sell),
+    // });
   };
 
   return (

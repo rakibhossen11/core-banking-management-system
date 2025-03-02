@@ -15,6 +15,7 @@ const ProductDetails = () => {
     name,
     category,
     buyHistory,
+    sellHistory,
   } = productDetail;
   console.log(productDetail);
   console.log(buyHistory);
@@ -107,14 +108,20 @@ const ProductDetails = () => {
       <div className="overflow-x-auto">
         <Table>
           <Table.Head>
-            <Table.HeadCell>Date</Table.HeadCell>
-            <Table.HeadCell>Sell</Table.HeadCell>
-            <Table.HeadCell>Buy</Table.HeadCell>
-            <Table.HeadCell>Action</Table.HeadCell>
-            <Table.HeadCell>
-              <span className="sr-only">Edit</span>
-            </Table.HeadCell>
-          </Table.Head>
+              {[
+                "Date",
+                "Sell",
+                "Buy",
+                "Action",
+                "Edit",
+              ].map((header, index) => (
+                <Table.HeadCell
+                  key={index}
+                >
+                  {header}
+                </Table.HeadCell>
+              ))}
+            </Table.Head>
           {buyHistory ? (
             <Table.Body className="divide-y">
               {buyHistory.map((buy, index) => (
@@ -126,11 +133,10 @@ const ProductDetails = () => {
                     {buy.date}
                   </Table.Cell>
                   <Table.Cell></Table.Cell>
-                  <Table.Cell>{buy.quantity}</Table.Cell>
-                  <Table.Cell></Table.Cell>
+                  <Table.Cell>{buyHistory ? buy.quantity : 'NO BUY'}</Table.Cell>
+                  <Table.Cell>{sellHistory ? sell.quantity : 'NO SELL'}</Table.Cell>
                   <Table.Cell>
                     <a
-                      href="#"
                       className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                     >
                       Edit
@@ -140,7 +146,7 @@ const ProductDetails = () => {
               ))}
             </Table.Body>
           ) : (
-            <p>No buyHistory</p>
+            <p className="text-center mt-4]">NO BUT OR SELL</p>
           )}
         </Table>
       </div>

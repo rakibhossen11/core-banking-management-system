@@ -15,6 +15,7 @@ import CustomerDetail from "../Client/CustomerDetail";
 import TransactionForm from "../Client/Transaction/TransactionForm";
 import Expenses from "../Expenses/Expenses";
 import AddExpenses from "../Expenses/AddExpenses";
+import Product from "../components/Lists/Product";
 
 const router = createBrowserRouter([
     {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/products',
-                element: <ProductList />
+                element: <Product />
             },
             {
                 path: '/addProducts',

@@ -1,41 +1,73 @@
-import React from 'react';
-import { Modal, Label, TextInput, Button } from 'flowbite-react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import ProductList from "./ProductList";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../redux/feature/productSlice";
+import { Button, Label, Select, Table } from "flowbite-react";
+import { Link } from "react-router-dom";
 
+const Product = () => {
+  const dispatch = useDispatch();
+  const { products, loading, error } = useSelector((state) => state.products);
+  // console.log(products);
 
-const Product = ({product}) => {
-    return (
-        <div>
-            <tr className="border hover:bg-gray-100">
-                <td className="px-4 py-2 border">{product.uniqId}</td>
-                <td className="px-4 py-2 border">{product.name}</td>
-                {/* <td className="px-4 py-2 border">{product.category}</td> */}
-                <td className="px-4 py-2 border">{product.stockQuantity}</td>
-                <td className="px-4 py-2 border">{product.unit}</td>
-                <td className="px-4 py-2 border">{product.supplier}</td>
-                <td className="px-4 py-2 border">${product.purchasePrice}</td>
-                <td className="px-4 py-2 border">${product.sellprice}</td>
-                <td className="px-4 py-2 border">{product.salesCount}</td>
-                <td className="px-4 py-2 border">{product.stockIn}</td>
-                <td className="px-4 py-2 border">{product.stockOut}</td>
-                <td className="px-4 py-2 border">{product.remarks}</td>
-                <td className="flex gap-2 mt-3">
-                  {/* <button
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                    onClick={() => openModal(product, "buy")}
-                  >
-                    Buy
-                  </button> */}
-                  <Button onClick={() => setOpenModal(true)}>Buy</Button>
-                  <Link to={`/product&Details/${product._id}`}>
-                    <button className="px-4 py-2 bg-red-500 text-white rounded-lg">
-                      see
-                    </button>
-                  </Link>
-                </td>
-              </tr>
+  useEffect(() => {
+    dispatch(fetchProducts());
+    console.log(dispatch(fetchProducts()));
+  }, [dispatch]);
+
+  return (
+    <div className="p-4">
+      <div className="flex justify-between m-2 items-center">
+
+        <div className="max-w-md">
+          <div className="mb-2 block">
+            <Label value="Sort By" />
+          </div>
+          <Select id="countries" required>
+            <option>Product Id</option>
+            <option>Date</option>
+            <option>Name</option>
+            <option>Stock</option>
+            <option>Price</option>
+          </Select>
         </div>
-    );
+
+        <div className="">
+          <Link to={`/addProducts`}>
+            <Button>New Product</Button>
+          </Link>
+        </div>
+      </div>
+      <Table>
+        <Table.Head>
+          {[
+            "Product ID",
+            "Product Name",
+            // "Category",
+            "Stock Quantity",
+            "Unit of Measure",
+            "Supplier",
+            // "Purchase Price",
+            // "Selling Price",
+            // "Sales Count",
+            // "Stock In",
+            // "Stock Out",
+            // "Remarks / Notes",
+            "Action",
+          ].map((header, index) => (
+            <Table.HeadCell key={index}>{header}</Table.HeadCell>
+          ))}
+        </Table.Head>
+        <Table.Body className="divide-y">
+          {products.map((product, index) => (
+            <ProductList key={index} product={product}></ProductList>
+          ))}
+        </Table.Body>
+      </Table>
+    </div>
+  );
 };
 
 export default Product;
+
+// http://localhost:5000/products/by-date?date=2025-02-28 this url for search product by the date

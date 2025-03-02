@@ -15,6 +15,7 @@ const BuyForm = () => {
     sellprice,
     purchasePrice,
     name,
+    productId,
     category,
   } = productDetail;
 
@@ -58,7 +59,7 @@ const BuyForm = () => {
           <TextInput
             id="id"
             type="number"
-            value={uniqId}
+            value={productId}
             //   onChange={(event) => setUniqId(event.target.value)}
             required
           />
@@ -79,7 +80,7 @@ const BuyForm = () => {
           <Button type="submit">Buy This Product</Button>
         </div>
       </form>
-    </div>
+    </div> 
   );
 };
 

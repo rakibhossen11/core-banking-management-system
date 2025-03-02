@@ -24,6 +24,16 @@ export const featchExpenses = createAsyncThunk(
   }
 );
 
+export const featchExpensesMonth = createAsyncThunk(
+    "expenses/featchExpensesMonth",
+    async (month) => {
+        console.log(month);
+      const response = await axios.get(`http://localhost:5000/expenses`, {params: {month: month}});
+      console.log(response.data);
+      return response.data;
+    }
+  );
+
 
 
 const expensesSlice = createSlice({
@@ -46,7 +56,11 @@ const expensesSlice = createSlice({
       })
       .addCase(addExpenses.fulfilled, (state, action) => {
         state.expenses.push(action.payload);
-      });
+      })
+      .addCase(featchExpensesMonth.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.expenses = action.payload;
+    })
   },
 });
 

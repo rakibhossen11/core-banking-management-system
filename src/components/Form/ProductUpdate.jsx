@@ -31,12 +31,11 @@ const ProductUpdate = () => {
   // Handle form submission
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log(name,supplier,category,uniqId,purchasePrice,sellprice,stockQuantity,unit);
+    console.log(name,supplier,category,purchasePrice,sellprice,stockQuantity,unit);
     const newProduct = {
       name: name,
       supplier: supplier,
       category: category,
-      uniqId: parseInt(uniqId),
       purchasePrice: parseFloat(purchasePrice),
       sellprice: parseFloat(sellprice),
       stockQuantity: parseInt(stockQuantity),

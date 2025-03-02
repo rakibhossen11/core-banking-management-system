@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import { Button, Card, Table } from "flowbite-react";
+import { Button, Card, Label, Select, Table } from "flowbite-react";
 import Swal from "sweetalert2";
 
 const UserTable = () => {
   const users = useLoaderData();
   console.log(users);
 
-   const handleDelete = (id) => {
+  const handleDelete = (id) => {
     console.log(id);
     // alert function
     Swal.fire({
@@ -36,9 +36,26 @@ const UserTable = () => {
 
   return (
     <div className="overflow-x-auto">
-      <Link to={"/userForm"}>
-        <Button pill>Add New</Button>
-      </Link>
+      <div className="flex justify-between m-2 items-center">
+        <div className="max-w-md">
+          <div className="mb-2 block">
+            <Label value="Sort By" />
+          </div>
+          <Select required>
+            <option>User Id</option>
+            <option>Date</option>
+            <option>Name</option>
+            <option>Number</option>
+            {/* <option></option> */}
+          </Select>
+        </div>
+
+        <div className="">
+          <Link to={"/userForm"}>
+            <Button>New User</Button>
+          </Link>
+        </div>
+      </div>
       <Table>
         <Table.Head>
           {["Name", "Email", "Phone", "Role"].map((header, index) => (
@@ -54,16 +71,16 @@ const UserTable = () => {
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 {user.name}
               </Table.Cell>
-              <Table.Cell>{user.name}</Table.Cell>
               <Table.Cell>{user.email}</Table.Cell>
               <Table.Cell>{user.phone}</Table.Cell>
+              <Table.Cell>Active</Table.Cell>
               <Table.Cell>
-                <Link to={`/customer&details/${user._id}`}>
+                {/* <Link to={`/customer&details/${user._id}`}>
                   <button className="px-4 py-2 bg-red-500 text-white rounded-lg">
                     see
                   </button>
                 </Link>
-                <Button onClick={() => handleDelete(user._id)} >Delete</Button>
+                <Button onClick={() => handleDelete(user._id)} >Delete</Button> */}
               </Table.Cell>
             </Table.Row>
           ))}
