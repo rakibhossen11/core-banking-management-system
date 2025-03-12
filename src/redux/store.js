@@ -3,6 +3,7 @@ import bankingReducer from "./feature/bankingSlice";
 import stockReducer from "./feature/stockSlice";
 import productReducer from "./feature/productSlice";
 import expensesRedcer from './feature/expensesSlice';
+import orderReducer from "./feature/orderSlice";
 // import transactionsSlice from "./feature/"
 
 export const store = configureStore({
@@ -12,5 +13,6 @@ export const store = configureStore({
         stock:  stockReducer,
         products: productReducer,
         expenses: expensesRedcer,
+        orders: orderReducer,
     }
 });

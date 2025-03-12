@@ -5,41 +5,35 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 const ProductUpdate = () => {
   const products = useLoaderData();
   // console.log(products);
-  const {
-    // _id,
-    // unit,
-    // uniqId,
-    // supplier,
-    // sellprice,
-    // purchasePrice,
-    // name,
-    // category,
-  } = products;
-  console.log(products);
+  const { _id, unit, supplier, sellprice, purchasePrice, name, category } =
+    products;
+  // console.log(products);
   // Initialize form state with the product's current values
-  const [name, setName] = useState("");
-  const [supplier, setSupplier] = useState("");
-  const [category, setCategory] = useState("");
-  const [uniqId, setuniqId] = useState("");
-  const [purchasePrice, setpurchasePrice] = useState("");
-  const [sellprice, setsellPrice] = useState("");
-  const [stockQuantity, setStockQuantity] = useState("");
-  const [unit, setUnit] = useState("");
+  const [updatedname, setUpdetedName] = useState("");
+  const [updatedsupplier, setUpdetedSupplier] = useState("");
+  const [updatedcategory, setUpdetedCategory] = useState("");
+  // const [uniqId, setUpdetedUniqId] = useState("");
+  const [updatedpurchasePrice, setUpdetedPurchasePrice] = useState("");
+  const [updatedsellprice, setUpdetedSellPrice] = useState("");
+  const [updatedstockQuantity, setUpdetedStockQuantity] = useState("");
+  const [updatedunit, setUpdetedUnit] = useState("");
 
   // Update form state if the product changes
 
   // Handle form submission
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log(name,supplier,category,purchasePrice,sellprice,stockQuantity,unit);
+    // console.log(name,supplier,category,purchasePrice,sellprice,stockQuantity,unit);
     const newProduct = {
-      name: name,
-      supplier: supplier,
-      category: category,
-      purchasePrice: parseFloat(purchasePrice),
-      sellprice: parseFloat(sellprice),
-      stockQuantity: parseInt(stockQuantity),
-      unit: unit,
+      name: updatedname || name,
+      supplier: updatedsupplier || supplier,
+      category: updatedcategory || category,
+      purchasePrice:
+        parseFloat(updatedpurchasePrice) || parseFloat(purchasePrice),
+      sellprice: parseFloat(updatedsellprice) || parseFloat(sellprice),
+      stockQuantity:
+        parseFloat(updatedstockQuantity) || parseInt(stockQuantity),
+      unit: updatedunit || unit,
     };
     console.log(newProduct);
     fetch(`http://localhost:5000/products/update/${products._id}`, {
@@ -63,7 +57,7 @@ const ProductUpdate = () => {
         <TextInput
           id=""
           type=""
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setUpdetedName(e.target.value)}
           placeholder={products.name}
         />
       </div>
@@ -74,7 +68,7 @@ const ProductUpdate = () => {
         <TextInput
           id=""
           type=""
-          onChange={(e) => setSupplier(e.target.value)}
+          onChange={(e) => setUpdetedSupplier(e.target.value)}
           placeholder={products.supplier}
         />
       </div>
@@ -85,11 +79,11 @@ const ProductUpdate = () => {
         <TextInput
           id=""
           type=""
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => setUpdetedCategory(e.target.value)}
           placeholder={products.category}
         />
       </div>
-      <div>
+      {/* <div>
         <div className="mb-2 block">
           <Label htmlFor="" value="Product Id" />
         </div>
@@ -99,7 +93,7 @@ const ProductUpdate = () => {
           onChange={(e) => setuniqId(e.target.value)}
           placeholder={products.uniqId}
         />
-      </div>
+      </div> */}
       <div>
         <div className="mb-2 block">
           <Label htmlFor="" value="Purchase Price" />
@@ -107,7 +101,7 @@ const ProductUpdate = () => {
         <TextInput
           id=""
           type=""
-          onChange={(e) => setpurchasePrice(e.target.value)}
+          onChange={(e) => setUpdetedPurchasePrice(e.target.value)}
           placeholder={products.purchasePrice}
         />
       </div>
@@ -118,7 +112,7 @@ const ProductUpdate = () => {
         <TextInput
           id=""
           type=""
-          onChange={(e) => setsellPrice(e.target.value)}
+          onChange={(e) => setUpdetedSellPrice(e.target.value)}
           placeholder={products.sellprice}
         />
       </div>
@@ -129,7 +123,7 @@ const ProductUpdate = () => {
         <TextInput
           id=""
           type=""
-          onChange={(e) => setStockQuantity(e.target.value)}
+          onChange={(e) => setUpdetedStockQuantity(e.target.value)}
           placeholder={products.stockQuantity}
         />
       </div>
@@ -140,7 +134,7 @@ const ProductUpdate = () => {
         <TextInput
           id=""
           type=""
-          onChange={(e) => setUnit(e.target.value)}
+          onChange={(e) => setUpdetedUnit(e.target.value)}
           placeholder={products.unit}
         />
       </div>

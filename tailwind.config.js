@@ -9,6 +9,7 @@ module.exports = {
     fontFamily: {
       hambra: ["Hammersmith One", "sans-serif"],
       signika: ["Signika", "sans-serif"],
+      popines: ["Signika", "sans-serif"]
     },
   },
   plugins: [flowbite.plugin()],

@@ -16,6 +16,7 @@ import TransactionForm from "../Client/Transaction/TransactionForm";
 import Expenses from "../Expenses/Expenses";
 import AddExpenses from "../Expenses/AddExpenses";
 import Product from "../components/Lists/Product";
+import Order from "../components/Order/Order";
 
 const router = createBrowserRouter([
     {
@@ -53,6 +54,11 @@ const router = createBrowserRouter([
                 path: '/sell/:id',
                 element: <SellForm />,
                 loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
+            },
+            {
+                path: '/orders',
+                element: <Order />,
+                // loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
             },
             {
                 path: '/userForm',
