@@ -1,25 +1,33 @@
 import { Avatar, TextInput } from "flowbite-react";
-import React from "react";
+import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { HiSearch } from "react-icons/hi";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { FaBell } from "react-icons/fa";
+import SideNav from "./SideNav";
 
 const Navbar = () => {
+  // const [isOpen, setIsOpen] = useState(false); // State to manage sidenav visibility
+
+  // Function to toggle sidenav
+  // const toggleSideNav = () => {
+  //   setIsOpen(!isOpen);
+  // };
+
   return (
     <div className="flex justify-between h-[120px] px-[40px] py-[35px] shadow-lg">
       <h1 className="font-popines text-[36px] ">Dashboard</h1>
-      <div className="flex items-center bg-[#F9FAFB] h-[60px] w-[513px] rounded-[16px] px-[24px] py-[14px]">
+      {/* <div className="flex items-center bg-[#F9FAFB] h-[60px] w-[513px] rounded-[16px] px-[24px] py-[14px]">
         <CiSearch className="w-[24px] h-[24px]" />
         <input
           className="border-none w-full bg-[#F9FAFB] focus:none"
           type="text"
         />
-      </div>
+      </div> */}
       <div className="flex gap-[42px]">
         <div></div>
         <div className="flex items-center bg-[#FFFAF1] p-[12px] rounded-lg">
-            <FaBell className="h-[32] w-[32] text-[#FFA412]" />
+          <FaBell className="h-[32] w-[32] text-[#FFA412]" />
         </div>
         {/* profile section */}
         <div className="flex justify-center items-center gap-[20px]">

@@ -17,6 +17,8 @@ import Expenses from "../Expenses/Expenses";
 import AddExpenses from "../Expenses/AddExpenses";
 import Product from "../components/Lists/Product";
 import Order from "../components/Order/Order";
+import Sales from "../components/Sales/Sales";
+import Stocks from "../components/Stocks/Stocks";
 
 const router = createBrowserRouter([
     {
@@ -56,8 +58,13 @@ const router = createBrowserRouter([
                 loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
             },
             {
-                path: '/orders',
-                element: <Order />,
+                path: '/salesReport',
+                element: <Sales />,
+                // loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
+            },
+            {
+                path: '/stocks',
+                element: <Stocks />,
                 // loader: (({params}) => fetch(`http://localhost:5000/products/${params.id}`))
             },
             {

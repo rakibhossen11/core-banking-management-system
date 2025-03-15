@@ -10,7 +10,7 @@ const Main = () => {
         <SideNav />
       </div>
       <div className="w-full">
-        {/* <Navbar /> */}
+        <Navbar />
         <Outlet />
       </div>
     </div>

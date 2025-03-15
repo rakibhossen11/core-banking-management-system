@@ -9,7 +9,7 @@ import router from "./Routes/Routes.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <div className="w-[1920px]">
+    <div className="">
       <Provider store={store}>
         {/* <App /> */}
         <RouterProvider router={router} />

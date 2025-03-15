@@ -1,14 +1,77 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../redux/feature/productSlice";
-import { submitOrder } from "../../redux/feature/orderSlice";
+import {
+  addToOrder,
+  removeProductFromOrder,
+  submitOrder,
+  updateProductQuantity,
+} from "../../redux/feature/orderSlice";
 import { List, Avatar, Button } from "flowbite-react";
+import { FaPlus } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa6";
 
 const Order = () => {
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state) => state.products);
-  const [selectedProducts, setSelectedProducts] = useState([]);
-  console.log(products);
+  const { products, loading, error, totalPrice } = useSelector(
+    (state) => state.products
+  );
+  const { selectedProducts } = useSelector((state) => state.orders);
+  console.log(selectedProducts);
+  const [count, setCount] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempCount, setTempCount] = useState(count);
+  // console.log(count);
+
+  // Calculate the total amount of the selected products
+  const totalAmount = selectedProducts.reduce(
+    (total, product) => total + product.sellprice * product.quantity,
+    0
+  );
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    }
+  };
+
+  const reset = () => {
+    setCount(0);
+  };
+
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+    setTempCount(count); // Initialize tempCount with the current count
+  };
+
+  const handleChange = (e) => {
+    setTempCount(Number(e.target.value)); // Update tempCount as the user types
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      saveCount();
+    }
+  };
+
+  const handleBlur = () => {
+    saveCount();
+  };
+
+  const saveCount = () => {
+    if (!isNaN(tempCount) && tempCount >= 0) {
+      setCount(tempCount); // Update the count with the new value
+    }
+    setIsEditing(false); // Exit edit mode
+  };
+
+  // const calculateTotal = () => {
+  //   return item.reduce((total, item) => total + count * sellprice, 0);
+  // };
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -16,12 +79,19 @@ const Order = () => {
 
   const handleProductSelect = (product) => {
     console.log(product);
-    setSelectedProducts((prev) => [...prev, product]);
+    dispatch(addToOrder(product));
   };
 
-  const calculateTotal = () => {
-    return selectedProducts.reduce((total, item) => total + item.sellprice, 0);
+  // Handler to update the quantity of a product in the order
+  const handleQuantityChange = (productId, quantity) => {
+    dispatch(
+      updateProductQuantity({ productId, quantity: parseInt(quantity) })
+    );
   };
+
+  const handleRemoveProduct = (productId) => {
+    dispatch(removeProductFromOrder(productId));
+  }
 
   const handleSubmitOrder = () => {
     const order = {
@@ -35,7 +105,7 @@ const Order = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="grid grid-cols-2">
       <div className="shadow-lg rounded-[6px] p-[16px]">
         <h1>All Products</h1>
         <List
@@ -43,40 +113,70 @@ const Order = () => {
           className="max-w-md divide-y divide-gray-200 dark:divide-gray-700"
         >
           <h2>Selected Products</h2>
-        <ul>
-          {selectedProducts.map((item, index) => (
-            <li key={index}>
-              {item.name} - ${item.price}
-            </li>
-          ))}
-        </ul>
-        <h3>Total: ${calculateTotal()}</h3>
-        <Button className="bg-[#5d87ff] py-[7px] px-[16px] font-[14px]" onClick={handleSubmitOrder}>Submit Order</Button>
-          <List.Item className="pb-3 sm:pb-4">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              {/* <Avatar
-                img="/images/people/profile-picture-1.jpg"
-                alt="Neil image"
-                rounded
-                size="sm"
-              /> */}
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                  {products.name}
+          <div>
+            {selectedProducts.map((item, index) => (
+              <div
+                key={index}
+                className="flex w-[337px] h-[50px] justify-between items-center bg-[#ffff rounded-lg"
+              >
+                <p className="font-popines text-[18px]">{item.name}</p>
+                <p className="font-popines text-[14px]">{item.sellprice}</p>
+                <div className="">
+                  <div className="">
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      className="w-[80px] h-[30px] text-[14px]"
+                      onChange={(e) =>
+                        handleQuantityChange(item.productId, e.target.value)
+                      }
+                      min="1"
+                    />
+                    {/* <div className="flex items-center justify-center space-x-4">
+                    <FaMinus
+                      onClick={decrement}
+                      disabled={count === 0}
+                      className={`${count === 0} w-[18] h-[18]`}
+                    />
+                    {isEditing ? (                                               
+                      <input
+                        type="number"
+                        value={product.quantity}
+                        onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onBlur={handleBlur}
+                        autoFocus
+                        className="w-20 text-2xl font-bold text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    ) : (
+                      <span
+                        onDoubleClick={handleDoubleClick}
+                        className="text-[20px] font-popines cursor-pointer"
+                      >
+                        {count}
+                      </span>
+                    )}
+                    <FaPlus onClick={increment} className="w-[18] h-[18]" />
+                  </div> */}
+                  </div>
+                </div>
+                <p className="font-popines text-[16px]">
+                  {item.quantity * item.sellprice}
                 </p>
-                <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                  {products.productId}
-                </p>
+                <button onClick={() => handleRemoveProduct(item.productId)}>Remove</button>
               </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                
-              </div>
-            </div>
-          </List.Item>
+            ))}
+          </div>
+          <h3>Total: ${totalAmount}</h3>
+          <Button
+            className="bg-[#5d87ff] py-[7px] px-[16px] font-[14px]"
+            onClick={handleSubmitOrder}
+          >
+            Order Place
+          </Button>
         </List>
       </div>
       {/*  */}
-      <h1>Product Sell Page</h1>
       <div className="shadow-lg rounded-[6px] p-[16px]">
         <h2>Products</h2>
         <List>
@@ -95,3 +195,103 @@ const Order = () => {
 };
 
 export default Order;
+
+const SelectedProductCard = ({ item }) => {
+  const [count, setCount] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempCount, setTempCount] = useState(count);
+  const { name, sellprice } = item;
+  const { selectedProducts } = useSelector((state) => state.order);
+  console.log(selectedProducts);
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    }
+  };
+
+  const reset = () => {
+    setCount(0);
+  };
+
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+    setTempCount(count); // Initialize tempCount with the current count
+  };
+
+  const handleChange = (e) => {
+    setTempCount(Number(e.target.value)); // Update tempCount as the user types
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      saveCount();
+    }
+  };
+
+  const handleBlur = () => {
+    saveCount();
+  };
+
+  const saveCount = () => {
+    if (!isNaN(tempCount) && tempCount >= 0) {
+      setCount(tempCount); // Update the count with the new value
+    }
+    setIsEditing(false); // Exit edit mode
+  };
+
+  // const calculateTotal = () => {
+  //   return item.reduce((total, item) => total + count * sellprice, 0);
+  // };
+
+  return (
+    <div className="flex w-[337px] h-[50px] justify-between items-center bg-[#ffff rounded-lg">
+      <p className="font-popines text-[18px]">{name}</p>
+      <p className="font-popines text-[14px]">{sellprice}</p>
+      <div className="">
+        <div className="">
+          <div className="flex items-center justify-center space-x-4">
+            <FaMinus
+              onClick={decrement}
+              disabled={count === 0}
+              className={`${count === 0} w-[18] h-[18]`}
+            />
+            {isEditing ? (
+              <input
+                type="number"
+                value={tempCount}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                onBlur={handleBlur}
+                autoFocus
+                className="w-20 text-2xl font-bold text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            ) : (
+              <span
+                onDoubleClick={handleDoubleClick}
+                className="text-[20px] font-popines cursor-pointer"
+              >
+                {count}
+              </span>
+            )}
+            <FaPlus onClick={increment} className="w-[18] h-[18]" />
+          </div>
+          {/* <div className="mt-4 text-center">
+            <button
+              onClick={reset}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Reset
+            </button>
+          </div> */}
+        </div>
+      </div>
+      <p className="font-popines text-[16px]">{count * sellprice}</p>
+      {/* <p className="font-popines text-[16px]">{calculateTotal()}</p> */}
+    </div>
+  );
+};
