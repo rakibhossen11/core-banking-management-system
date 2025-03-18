@@ -27,12 +27,12 @@ const SideNav = ({ children }) => {
       > */}
       <div className="shadow-lg h-[1311px] p-[48px] bg-[#FFFFFF]">
         <Brand />
-        <Link to="/">
+        {/* <Link to="/">
           <NavItem Icon={HiChartPie} name="Dashboard" />
-        </Link>
-        <Link to="/usertable">
+        </Link> */}
+        {/* <Link to="/usertable">
           <NavItem Icon={MdPeople} name="People" />
-        </Link>
+        </Link> */}
         <Link to="/products">
           <NavItem Icon={HiShoppingBag} name="Product" />
         </Link>
@@ -40,12 +40,15 @@ const SideNav = ({ children }) => {
           <NavItem Icon={MdOutlineBarChart} name="Stock" />
         </Link>
         <Link to="/salesReport">
-          <NavItem Icon={BiLineChart} name="Sales Report" />
+          {/* <NavItem Icon={BiLineChart} name="Sales Report" /> */}
+        </Link>
+        <Link to="/orders">
+          <NavItem Icon={CiShoppingCart} name="Orders" />
         </Link>
         {/* <NavItem Icon={MdPeople} name="People" /> */}
-        <NavItem Icon={MdOutlineBarChart} name="Product" />
-        <NavItem Icon={CiShoppingCart} name="Orders" />
-        <NavItem Icon={BiLineChart} name="Sales Report" />
+        {/* <NavItem Icon={MdOutlineBarChart} name="Product" /> */}
+        {/* <NavItem Icon={CiShoppingCart} name="Orders" /> */}
+        {/* <NavItem Icon={BiLineChart} name="Sales Report" /> */}
       </div>
     </div>
   );

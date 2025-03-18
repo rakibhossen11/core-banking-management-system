@@ -1,75 +1,107 @@
-import React, { useRef } from "react";
+import React from "react";
+// import generateInvoicePDF from "./generateInvoicePDF"; // Import the function
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
-const Invoice = ({ selectedProducts, totalPrice }) => {
-  const componentRef = useRef();
-
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+const Invoice = () => {
+  const orderData = {
+    totalAmount: 4000,
+    products: [
+      {
+        name: "GP 20 Minute",
+        quantity: 10,
+        sellprice: 20,
+      },
+      {
+        name: "Robi",
+        quantity: 5,
+        sellprice: 20,
+      },
+    ],
+  };
   return (
     <div>
+      {/* <h2>Invoice Page</h2>
+      <button onClick={() => generateInvoicePDF(orderData)}>Download Invoice</button>
       <div>
-        <div
-          ref={componentRef}
-          style={{ padding: "20px", border: "1px solid #ccc" }}
-        >
-          <h2 style={{ textAlign: "center" }}>My POS System</h2>
-          <h3 style={{ textAlign: "center" }}>Invoice</h3>
-          <p style={{ textAlign: "right" }}>
-            Date: {new Date().toLocaleDateString()}
-          </p>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              marginTop: "20px",
-            }}
-          >
-            <thead>
-              <tr>
-                <th style={{ border: "1px solid #000", padding: "8px" }}>
-                  Product
-                </th>
-                <th style={{ border: "1px solid #000", padding: "8px" }}>
-                  Price
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedProducts.map((product, index) => (
-                <tr key={index}>
-                  <td style={{ border: "1px solid #000", padding: "8px" }}>
-                    {product.name}
-                  </td>
-                  <td style={{ border: "1px solid #000", padding: "8px" }}>
-                    ${product.price}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <h3 style={{ marginTop: "20px", textAlign: "right" }}>
-            Total: ${totalPrice}
-          </h3>
-        </div>
-
-        <button
-          onClick={handlePrint}
-          style={{
-            marginTop: "20px",
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Print Invoice
-        </button>
-      </div>
+      <h2>POS Invoice</h2>
+      <button onClick={() => printPOSInvoice(orderData)}>Print Invoice</button>
+    </div> */}
     </div>
   );
 };
 
 export default Invoice;
+
+const generateInvoicePDF = (orderData) => {
+  const doc = new jsPDF();
+
+  // Invoice Title
+  doc.setFontSize(16);
+  doc.text("Invoice", 14, 20);
+
+  // Order Details
+  doc.setFontSize(12);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 30);
+  doc.text(`Total Amount: $${orderData.totalAmount}`, 14, 40);
+
+  // Table Headers and Data
+  const tableColumn = ["Product Name", "Quantity", "Unit Price", "Total"];
+  const tableRows = [];
+
+  orderData.products.forEach((product) => {
+    const productData = [
+      product.name,
+      product.quantity,
+      `$${product.sellprice}`,
+      `$${product.quantity * product.sellprice}`,
+    ];
+    tableRows.push(productData);
+  });
+
+  // doc.autoTable({
+  //   head: [tableColumn],
+  //   body: tableRows,
+  //   startY: 50,
+  // });
+  // doc.autoTable({
+  //   head: [tableColumn],
+  //   body: tableRows,
+  //   startY: 50,
+  //   styles: { fontSize: 10, cellPadding: 5 },
+  // });
+
+  // Save the PDF
+  doc.save("invoice.pdf");
+};
+
+const printPOSInvoice = (orderData) => {
+  const printWindow = window.open("", "_blank");
+  printWindow.document.write("<pre>"); // Ensures monospaced font
+
+  printWindow.document.write("================================\n");
+  printWindow.document.write("        My Shop Invoice        \n");
+  printWindow.document.write("================================\n");
+  printWindow.document.write(`Date: ${new Date().toLocaleDateString()} \n`);
+  printWindow.document.write("================================\n");
+  printWindow.document.write("Item           Qty    Price   Total\n");
+  printWindow.document.write("--------------------------------\n");
+
+  orderData.products.forEach((product) => {
+    printWindow.document.write(
+      `${product.name.padEnd(12)} ${product.quantity.toString().padEnd(6)} $${product.sellprice
+        .toString()
+        .padEnd(7)} $${(product.quantity * product.sellprice).toFixed(2)}\n`
+    );
+  });
+
+  printWindow.document.write("--------------------------------\n");
+  printWindow.document.write(`Total Amount: $${orderData.totalAmount}\n`);
+  printWindow.document.write("================================\n");
+  printWindow.document.write("      THANK YOU, COME AGAIN!    \n");
+  printWindow.document.write("================================\n");
+
+  printWindow.document.write("</pre>");
+  printWindow.document.close();
+  printWindow.print();
+};

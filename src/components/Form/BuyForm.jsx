@@ -21,9 +21,9 @@ const BuyForm = () => {
 
   const handleBuy = (e) => {
     e.preventDefault();
-    console.log(uniqId, parseQuantity);
+    console.log(productId, parseQuantity);
     const quantity = parseInt(parseQuantity);
-    const buy = { uniqId, quantity };
+    const buy = { productId, quantity };
     console.log(buy);
     // dispatch(buyProduct(buy));
     fetch("http://localhost:5000/products/buy", {

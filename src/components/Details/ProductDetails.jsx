@@ -20,7 +20,6 @@ const ProductDetails = () => {
   console.log(productDetail);
   console.log(buyHistory);
 
-  
   const handleDelete = (id) => {
     console.log(id);
     // alert function
@@ -87,12 +86,19 @@ const ProductDetails = () => {
             {category}
           </span>
           <div className="mt-4 flex space-x-3 lg:mt-6">
-            <Link
+            {/* <Link
               href="#"
               to={`/product&update/${_id}`}
               className="inline-flex items-center rounded-lg bg-cyan-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
             >
               Update
+            </Link> */}
+            <Link
+              href="#"
+              to={`/buy/${_id}`}
+              className="inline-flex items-center rounded-lg bg-cyan-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+            >
+              Buy
             </Link>
             <a
               href="#"
@@ -105,23 +111,14 @@ const ProductDetails = () => {
         </div>
       </Card>
 
+      <h1>Buys Record</h1>
       <div className="overflow-x-auto">
         <Table>
           <Table.Head>
-              {[
-                "Date",
-                "Sell",
-                "Buy",
-                "Action",
-                "Edit",
-              ].map((header, index) => (
-                <Table.HeadCell
-                  key={index}
-                >
-                  {header}
-                </Table.HeadCell>
-              ))}
-            </Table.Head>
+            {["Date", "Buy", "Action",].map((header, index) => (
+              <Table.HeadCell key={index}>{header}</Table.HeadCell>
+            ))}
+          </Table.Head>
           {buyHistory ? (
             <Table.Body className="divide-y">
               {buyHistory.map((buy, index) => (
@@ -132,13 +129,56 @@ const ProductDetails = () => {
                   <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                     {buy.date}
                   </Table.Cell>
-                  <Table.Cell></Table.Cell>
-                  <Table.Cell>{buyHistory ? buy.quantity : 'NO BUY'}</Table.Cell>
-                  <Table.Cell>{sellHistory ? sell.quantity : 'NO SELL'}</Table.Cell>
                   <Table.Cell>
-                    <a
-                      className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                    >
+                    {buyHistory ? buy.quantity : "NO BUY"}
+                  </Table.Cell>
+                  {/* <Table.Cell>{}</Table.Cell> */}
+                  <Table.Cell>
+                    <a className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                      Edit
+                    </a>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          ) : (
+            <p className="text-center mt-4]">NO BUT OR SELL</p>
+          )}
+        </Table>
+      </div>
+      <h1>Sells Record</h1>
+      <div className="overflow-x-auto">
+        <Table>
+          <Table.Head>
+            {[
+              "Date",
+              "Sell",
+              "Total",
+              "Action",
+            ].map((header, index) => (
+              <Table.HeadCell key={index}>{header}</Table.HeadCell>
+            ))}
+          </Table.Head>
+          {sellHistory ? (
+            <Table.Body className="divide-y">
+              {sellHistory.map((sell, index) => (
+                <Table.Row
+                  key={index}
+                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {sell.date}
+                  </Table.Cell>
+                  {/* <Table.Cell></Table.Cell> */}
+                  {/* <Table.Cell>{buyHistory ? buy.quantity : 'NO BUY'}</Table.Cell> */}
+                  <Table.Cell>
+                    {sellHistory ? sell.quantity : "NO SELL"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {sell.quantity ? sell.quantity * sell.price : "NO SELL"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <a className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                       Edit
                     </a>
                   </Table.Cell>

@@ -10,6 +10,7 @@ import {
 import { List, Avatar, Button } from "flowbite-react";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa6";
+import Invoice from "../Invoice";
 
 const Order = () => {
   const dispatch = useDispatch();
@@ -91,17 +92,26 @@ const Order = () => {
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeProductFromOrder(productId));
-  }
+  };
 
   const handleSubmitOrder = () => {
+    // const date = moment().tz("Asia/Dhaka").format("YYYY-MM-DD"); //.format("YYYY-MM-DD HH:mm A"); with time
     const order = {
-      products: selectedProducts.map((item) => ({
-        productId: item._id,
-        quantity: 1, // Assuming quantity is 1 for simplicity
+      // customerName,
+      // customerAddress,
+      // invoiceNumber,
+      // date,
+      products: selectedProducts.map((product) => ({
+        id: product.productId,
+        name: product.name,
+        sellPrice: product.sellprice, // Assuming `price` is the sell price
+        quantity: product.quantity,
       })),
+      totalAmount,
+      // date: date, 
     };
-    console.log(order.products);
-    dispatch(submitOrder(order.products));
+    console.log(order);
+    dispatch(submitOrder(order));
   };
 
   return (
@@ -163,13 +173,15 @@ const Order = () => {
                 <p className="font-popines text-[16px]">
                   {item.quantity * item.sellprice}
                 </p>
-                <button onClick={() => handleRemoveProduct(item.productId)}>Remove</button>
+                <button onClick={() => handleRemoveProduct(item.productId)}>
+                  Remove
+                </button>
               </div>
             ))}
           </div>
           <h3>Total: ${totalAmount}</h3>
           <Button
-            className="bg-[#5d87ff] py-[7px] px-[16px] font-[14px]"
+            className="sticky bottom-0 left-0 w-full p-2"
             onClick={handleSubmitOrder}
           >
             Order Place
@@ -189,6 +201,7 @@ const Order = () => {
             </List.Item>
           ))}
         </List>
+        <Invoice />
       </div>
     </div>
   );
