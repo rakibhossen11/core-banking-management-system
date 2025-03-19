@@ -4,19 +4,20 @@ import {
   fetchOrders,
   selectAllOrders,
   toggleOrderSelection,
+  updateOrderStatus,
 } from "../../redux/feature/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Table } from "flowbite-react";
+import { Select, Table } from "flowbite-react";
 
 const OrderList = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
   const selectedOrders = useSelector((state) => state.orders.selectedOrders);
-  console.log(selectedOrders);
+//   console.log(selectedOrders);
 
   useEffect(() => {
     dispatch(fetchOrders());
-    console.log(dispatch(fetchOrders()));
+    // console.log(dispatch(fetchOrders())); 
   }, [dispatch]);
 
   // Calculate the total amount of the selected products
@@ -24,6 +25,30 @@ const OrderList = () => {
     (total, product) => total + product.totalAmount,
     0
   );
+
+  const totals = orders.reduce(
+    (acc, order) => {
+      if (order.status === "pending") acc.pending++;
+      if (order.status === "confirmed") acc.confirmed++;
+      if (order.status === "cancelled") acc.cancelled++;
+      return acc;
+    },
+    { pending: 0, confirmed: 0, cancelled: 0 }
+  );
+
+//   console.log("Totals:", totals);
+
+  const totalsAmaount = orders.reduce(
+    (acc, order) => {
+      if (order.status === "pending") acc.pendingAmount += order.sellPrice;
+      if (order.status === "confirmed") acc.confirmedAmount += order.sellPrice;
+      if (order.status === "cancelled") acc.cancelledAmount += order.sellPrice;
+      return acc;
+    },
+    { pendingAmount: 0, confirmedAmount: 0, cancelledAmount: 0 }
+  );
+  
+//   console.log("Totals Amaount:", totalsAmaount);
 
   const handleSelectAll = (e) => {
     dispatch(selectAllOrders());
@@ -55,11 +80,53 @@ const OrderList = () => {
     }
   };
 
-  console.log(totalAmount);
+  const handleStatusChange = async (orderId, status) => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/orders/update-status",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ orderId, status }),
+        }
+      );
+
+      if (response.ok) {
+        dispatch(updateOrderStatus({ orderId, status }));
+      } else {
+        console.error("Failed to update order status");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleFilterChange = (status) => {
+    // console.log(status);
+    dispatch(fetchOrders(status));
+  };
+
+  //   console.log(totalAmount);
 
   return (
     <div>
       <div className="overflow-x-auto">
+        <div className="w-[150px]">
+          <Select onChange={(e) => handleFilterChange(e.target.value)}>
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="cancelled">Canceled</option>
+          </Select>
+        </div>
+        <div>
+          <h2>Order Summary</h2>
+          <p>Total Pending Orders: {totals.pending}</p>
+          <p>Total Confirmed Orders: {totals.confirmed}</p>
+          <p>Total Cancelled Orders: {totals.cancelled}</p>
+        </div>
         <Table>
           <Table.Head>
             <Table.HeadCell>Order Id</Table.HeadCell>
@@ -99,6 +166,23 @@ const OrderList = () => {
                   {p._id}
                 </Table.Cell>
                 <Table.Cell>{p.totalAmount}</Table.Cell>
+                <Table.Cell>
+                  {p.status === "confirmed" || p.status === "cancelled" ? (
+                    <span>{p.status}</span> // Display the status if it's "confirmed" or "cancelled"
+                  ) : (
+                    <Select
+                      value={p.status}
+                      onChange={(e) =>
+                        handleStatusChange(p._id, e.target.value)
+                      }
+                      className="ml-2 px-2 py-1 border rounded w-[120px]"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="confirmed">Confirm</option>
+                      <option value="cancelled">Cancel</option>
+                    </Select>
+                  )}
+                </Table.Cell>
                 {/* <Table.Cell>Laptop</Table.Cell>
                 <Table.Cell>$2999</Table.Cell>
                 <Table.Cell>

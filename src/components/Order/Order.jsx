@@ -108,6 +108,7 @@ const Order = () => {
         quantity: product.quantity,
       })),
       totalAmount,
+      status: 'pending',
       // date: date, 
     };
     console.log(order);
