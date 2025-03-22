@@ -30,9 +30,9 @@ const SideNav = ({ children }) => {
         {/* <Link to="/">
           <NavItem Icon={HiChartPie} name="Dashboard" />
         </Link> */}
-        {/* <Link to="/usertable">
+        <Link to="/usertable">
           <NavItem Icon={MdPeople} name="People" />
-        </Link> */}
+        </Link>
         <Link to="/products">
           <NavItem Icon={HiShoppingBag} name="Product" />
         </Link>

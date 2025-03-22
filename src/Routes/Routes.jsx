@@ -20,6 +20,7 @@ import Order from "../components/Order/Order";
 import Sales from "../components/Sales/Sales";
 import Stocks from "../components/Stocks/Stocks";
 import OrderList from "../components/Order/OrderList";
+import Registration from "../components/Registration/Registration";
 
 const router = createBrowserRouter([
     {
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
             {
                 path: '/signIn',
                 element: <SignIn />
+            },
+            {
+                path: '/registration',
+                element: <Registration />
             },
         ]
     }
