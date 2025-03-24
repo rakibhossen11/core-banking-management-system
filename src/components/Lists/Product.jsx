@@ -270,12 +270,13 @@ const Product = () => {
 
 export default Product;
 
-const ActionIcon = ({ name, Icon, link, isActive, onClick }) => {
+export const ActionIcon = ({ name, Icon, link, isActive, onClick,Detail,id }) => {
   return (
     <div className="flex gap-[24px] mt-[48px]">
       <Link to={link}>
         <Icon className="h-[32px] w-[32px] text-[#737791]" />
         <p className="font-popines text-[#737791] text-[18px]">{name}</p>
+        {/* <Detail onClick={id} /> */}
       </Link>
     </div>
   );

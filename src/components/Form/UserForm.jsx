@@ -39,7 +39,7 @@ const UserForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-4">
-      <div>
+      {/* <div>
           <div className="mb-2 block">
             <Label htmlFor="" value="Customer ID" />
           </div>
@@ -51,7 +51,7 @@ const UserForm = () => {
             placeholder="Set a client Id"
             required
           />
-        </div>
+        </div> */}
         <div>
           <div className="mb-2 block">
             <Label htmlFor="" value="Your Name" />

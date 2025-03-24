@@ -3,31 +3,49 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLoaderData } from "react-router-dom";
 import { addTransaction } from "../../redux/feature/bankingSlice";
+import Swal from "sweetalert2";
 
 const TransactionForm = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [type, setType] = useState("credit");
   const [parseamount, setParseAmaont] = useState("");
   const [description, setDescription] = useState("");
   const data = useLoaderData();
-  const clientId = data.clientId;
-//   console.log(data);
+  const customerId = data.customerId;
+  //   console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const amount = parseFloat(parseamount);
-    const transaction = {clientId, type, amount, description};
+    const transaction = { customerId, type, amount, description };
     console.log(transaction);
     // console.log(dispatch(addTransaction(transaction)));
-    // dispatch(addTransaction(transaction));
-    
-    fetch("http://localhost:5000/users/transaction", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(transaction),
+    dispatch(addTransaction(transaction))
+      .unwrap()
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Transaction added successfully!",
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: error.message || "Failed to add Transaction",
+          confirmButtonText: "OK",
+        });
       });
+
+    // fetch("http://localhost:5000/customers/transaction", {
+    //     method: "POST",
+    //     headers: {
+    //       "content-type": "application/json",
+    //     },
+    //     body: JSON.stringify(transaction),
+    //   });
   };
 
   return (
@@ -42,8 +60,8 @@ const TransactionForm = () => {
           id=""
           required
         >
-          <option value="debit">Debit</option>
-          <option value="credit">Credit</option>
+          <option value="withdraw">Withdraw</option>
+          <option value="deposit">Deposit</option>
         </Select>
       </div>
       <div>
@@ -55,6 +73,7 @@ const TransactionForm = () => {
           type="number"
           onChange={(e) => setParseAmaont(e.target.value)}
           placeholder="Amaount"
+          required
         />
       </div>
       <div>

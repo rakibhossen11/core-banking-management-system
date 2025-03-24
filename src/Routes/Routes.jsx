@@ -21,6 +21,8 @@ import Sales from "../components/Sales/Sales";
 import Stocks from "../components/Stocks/Stocks";
 import OrderList from "../components/Order/OrderList";
 import Registration from "../components/Registration/Registration";
+import AddCustomer from "../Client/Customer/AddCustomer";
+import CustomersTable from "../Client/Customer/CustomersTable";
 
 const router = createBrowserRouter([
     {
@@ -77,6 +79,20 @@ const router = createBrowserRouter([
             {
                 path: '/userForm',
                 element: <UserForm />
+            },
+            {
+                path: '/customer-create',
+                element: <AddCustomer />
+            },
+            {
+                path: '/customers',
+                element: <CustomersTable />,
+                loader: () => fetch('http://localhost:5000/customers')
+            },
+            {
+                path: '/customerDetails/:id',
+                element: <CustomerDetail />,
+                loader: (({params}) => fetch(`http://localhost:5000/customers/${params.id}`))
             },
             {
                 path: '/usertable',

@@ -4,14 +4,28 @@ import axios from "axios";
 // async thunk for addTransaction
 export const addTransaction = createAsyncThunk(
   "transactions/addTransaction",
-  async ({ userId, type, amount }, { rejectWithValue }) => {
-    console.log({ userId, type, amount });
+  async (transaction, { rejectWithValue }) => {
+    console.log(transaction);
     try {
-      const response = await axios.get(
-        "http://localhost:5000/users/transaction",
-        { userId, type, amount }
+      const response = await axios.post(
+        "http://localhost:5000/customers/transaction",
+        { transaction }
       );
       console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Fetch orders
+export const fetchTransactions = createAsyncThunk(
+  "orders/fetchOrders", 
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/customers`);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -40,9 +54,9 @@ const bankingSlice = createSlice({
         state.status = "failed";
         state.error = action.payload.error;
       })
-    //   .addCase(fetchTransactions.fulfilled, (state, action) => {
-    //     state.transactions = action.payload;
-    //   });
+      .addCase(fetchTransactions.fulfilled, (state, action) => {
+        state.transactions = action.payload;
+      });
   },
 });
 
