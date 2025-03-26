@@ -5,6 +5,8 @@ import {
   TextInput,
   Spinner,
   Alert,
+  Label,
+  Select,
 } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
@@ -28,6 +30,7 @@ const CustomersTable = () => {
   // console.log(customers);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [sortType, setSortType] = useState("");
 
   useEffect(() => {
     dispatch(
@@ -104,6 +107,11 @@ const CustomersTable = () => {
         }
       });
   };
+
+  const handleSort = () =>{
+    console.log(sortType);
+  };
+
   return (
     <div>
       <div className="flex justify-between">
@@ -154,6 +162,22 @@ const CustomersTable = () => {
             <Button>New Customer</Button>
           </Link>
         </div>
+      </div>
+      <div className="max-w-md">
+        <div className="mb-2 block">
+          <Label value="Sort By" />
+        </div>
+        <Select
+          id=""
+          value={sortType}
+          onClick={handleSort}
+          onChange={(e) => setSortType(e.target.value)}
+          required
+        >
+          <option value=''>Sort By</option>
+          <option value='ase'>High To Low</option>
+          <option value='dsc'>Low To High</option>
+        </Select>
       </div>
       <div>
         <Table>
