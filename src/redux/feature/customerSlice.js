@@ -32,7 +32,7 @@ export const addCustomer = createAsyncThunk(
 
 export const fetchCustomers = createAsyncThunk(
   "customers/fetchAll",
-  async ({ page = 1,}, { rejectWithValue }) => {
+  async ({ page = 1 }, { rejectWithValue }) => {
     try {
       // const response = await axios.get(
       //   `http://localhost:5000//customers?page=${page}&limit=10&search=${search}`
@@ -40,7 +40,7 @@ export const fetchCustomers = createAsyncThunk(
       const response = await axios.get(
         `http://localhost:5000/customers?page=${page}&limit=10`
       );
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -53,9 +53,11 @@ export const fetchCustomerById = createAsyncThunk(
   "customers/fetchCustomerById",
   async (customerId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/customers/${customerId}`
-      );
+      // console.log(customerId);
+      const response = await axios.get(`http://localhost:5000/customers/`, {
+        customerId,
+      });
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -113,6 +115,58 @@ export const searchCustomersByName = createAsyncThunk(
     }
   }
 );
+
+export const updateTransaction = createAsyncThunk(
+  "transactions/update",
+  async (
+    { _id, transactionId, transactionData },
+    { rejectWithValue }
+  ) => {
+    try {
+      console.log(_id, transactionId, transactionData);
+      const response = await axios.put(
+        `http://localhost:5000/customers/${_id}/transactions/${transactionId}`,
+        transactionData
+      );
+      // return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteTransaction = createAsyncThunk(
+  'transactions/delete',
+  async ({ customerId, transactionId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/customers/${customerId}/transactions/${transactionId}`
+      );
+      return { ...response.data, transactionId };
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// export const selectCustomerTotals = (customers) => {
+//   return customers.reduce(
+//     (totals, customer) => {
+//       const balance = Number(customer.balance) || 0;
+      
+//       if (balance > 0) {
+//         totals.positive += balance;
+//       } else {
+//         totals.negative += balance;
+//       }
+//       return totals;
+//     },
+//     { positive: 0, negative: 0 }
+//   );
+// };
+
+// // Usage in component
+// const { positive, negative } = useSelector(selectCustomerTotals);
 
 const customerSlice = createSlice({
   name: "customers",
@@ -237,7 +291,33 @@ const customerSlice = createSlice({
       .addCase(searchCustomersByName.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(updateTransaction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(updateTransaction.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(updateTransaction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || 'Failed to update transaction';
+      })
+      .addCase(deleteTransaction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(deleteTransaction.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(deleteTransaction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || 'Failed to delete transaction';
+      })
   },
 });
 

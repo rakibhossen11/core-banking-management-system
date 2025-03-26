@@ -9,7 +9,7 @@ import Order from "../Order/Order";
 const SellForm = () => {
   const productDetail = useLoaderData();
   const { products, loading, error } = useSelector((state) => state.products);
-  console.log(products);
+  // console.log(products);
   const dispatch = useDispatch();
   const [parseQuantity, setParseQuantity] = useState(1);
   const {
@@ -30,7 +30,7 @@ const SellForm = () => {
 
   const handleAddToOrder = (product) => {
     console.log(product);
-    console.log(addToOrder(product))
+    // console.log(addToOrder(product))
     dispatch(addToOrder(product));
   };
 
@@ -39,7 +39,7 @@ const SellForm = () => {
     console.log(uniqId, parseQuantity);
     const quantity = parseInt(parseQuantity);
     const sell = { uniqId, quantity };
-    console.log(sell);
+    // console.log(sell);
     dispatch(buyProduct(buy));
     // fetch("http://localhost:5000/products/sell", {
     //   method: "POST",

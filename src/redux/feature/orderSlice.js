@@ -53,7 +53,7 @@ const orderSlice = createSlice({
     // Reducer to add a product to the order
     addToOrder: (state, action) => {
       const product = action.payload;
-      console.log(product);
+      // console.log(product);
       const existingProduct = state.selectedProducts.find(
         (p) => p.productId === product.productId
       );

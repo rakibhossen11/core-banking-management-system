@@ -58,13 +58,13 @@ const Product = () => {
   const totalPurchasePrice = products.reduce((total, product) => {
     return total + (product.purchasePrice * product.stockQuantity || 0); // Ensure purchasePrice is a number
   }, 0);
-  console.log(totalPurchasePrice);
+  // console.log(totalPurchasePrice);
 
   // Calculate total purchase price
   const totalSellPrice = products.reduce((total, product) => {
     return total + (product.sellprice * product.stockQuantity || 0); // Ensure purchasePrice is a number
   }, 0);
-  console.log(totalSellPrice);
+  // console.log(totalSellPrice);
 
   useEffect(() => {
     dispatch(fetchProducts());

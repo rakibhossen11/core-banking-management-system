@@ -18,7 +18,7 @@ const Order = () => {
     (state) => state.products
   );
   const { selectedProducts } = useSelector((state) => state.orders);
-  console.log(selectedProducts);
+  // console.log(selectedProducts);
   const [count, setCount] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
   const [tempCount, setTempCount] = useState(count);
@@ -79,7 +79,7 @@ const Order = () => {
   }, [dispatch]);
 
   const handleProductSelect = (product) => {
-    console.log(product);
+    // console.log(product);
     dispatch(addToOrder(product));
   };
 

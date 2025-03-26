@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const TransactionForm = () => {
   const dispatch = useDispatch();
-  const [type, setType] = useState("credit");
+  const [type, setType] = useState("deposit");
   const [parseamount, setParseAmaont] = useState("");
   const [description, setDescription] = useState("");
   const data = useLoaderData();

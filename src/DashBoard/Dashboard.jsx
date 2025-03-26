@@ -17,7 +17,6 @@ const Dashboard = () => {
     dispatch(fetchProducts());
     console.log(dispatch(fetchProducts()));
   }, [dispatch]);
-  
 
   return (
     <div>
@@ -131,3 +130,20 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+export const TopCard = ({ text1, text2 }) => {
+  return (
+    <div className="mt-[43px]">
+      <div className="bg-[#F3E8FF] p-[20px] rounded-[16px]">
+        <div className="bg-[#BF83FF] rounded-full p-[8px] h-[32px] w-[32px] mb-[16px]">
+          {/* <IoMdPersonAdd className="text-[#FFFFFF]" /> */}
+        </div>
+        <p className="font-popines text-[24px]">{text1}</p>
+        <p className="font-popines text-[16px] text-[#425166]">{text2}</p>
+        <p className="font-popines text-[12px] text-[#4079ED]">
+          
+        </p>
+      </div>
+    </div>
+  );
+};

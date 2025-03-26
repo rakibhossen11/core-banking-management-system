@@ -10,7 +10,7 @@ import {
 import { useSelector } from "react-redux";
 
 const Trasection = () => {
-  const transactions = useSelector((state) => state.banking.transactions);
+  const {transactions} = useSelector((state) => state.banking.transactions);
   console.log(transactions);
 
   return (

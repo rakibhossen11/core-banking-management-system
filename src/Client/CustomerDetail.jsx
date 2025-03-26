@@ -1,13 +1,50 @@
-import React from "react";
-import { Link, useLoaderData } from "react-router-dom";
-import { Card, Dropdown, Table } from "flowbite-react";
+import React, { useEffect, useState } from "react";
+import { Link, useLoaderData, useParams } from "react-router-dom";
+import { Button, Card, Dropdown, Modal, Select, Table, TextInput } from "flowbite-react";
 import TransactionForm from "./Transaction/TransactionForm";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCustomerById, updateTransaction } from "../redux/feature/customerSlice";
 
-const CustomerDetail = ({customerId}) => {
-  const customer = useLoaderData();
-  const customerData = useSelector((state) => state.transactions); // Get customer data from Redux store
-  console.log(customer.customerId);
+const CustomerDetail = () => {
+  const customers = useLoaderData();
+  const dispatch = useDispatch();
+  const customerId = customers.customerId;
+  // const {customerId} = useParams();
+  const {customer,loading} = useSelector((state) => state.customers); // Get customer data from Redux store
+  const [editingTransaction, setEditingTransaction] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [transactionToDelete, setTransactionToDelete] = useState(null);
+  // console.log(editingTransaction);
+  // console.log(customerId);
+  // console.log(Date.now());
+  // console.log(Math.floor(Date.now() + Math.random() * 100000));
+
+  useEffect(() => {
+      dispatch(
+        fetchCustomerById(customerId)
+      );
+    }, [dispatch,customerId]);
+
+    const handleUpdate = async (e) => {
+      e.preventDefault();
+      // console.log(customers._id, editingTransaction.txnId,editingTransaction);
+      await dispatch(updateTransaction({
+        _id: customers._id,
+        transactionId: editingTransaction.txnId,
+        transactionData: editingTransaction
+      }));
+      // setShowEditModal(false);
+    };
+  
+    const handleDelete = async () => {
+      await dispatch(deleteTransaction({
+        customerId: customer._id,
+        transactionId: transactionToDelete
+      }));
+      setShowDeleteModal(false);
+    };
+  
 
   return (
     <div>
@@ -15,10 +52,10 @@ const CustomerDetail = ({customerId}) => {
         <Card className="max-w-sm">
           <div className="flex flex-col items-center pb-10">
             <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-              Name: {customer.name}
+              Name: {customers.name}
             </h5>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              Current Balance: {customer.balance ? customer.balance : 0}
+              Current Balance: {customers.balance ? customers.balance : 0}
             </span>
             {/* <div className="mt-4 flex space-x-3 lg:mt-6">
               <a
@@ -47,9 +84,9 @@ const CustomerDetail = ({customerId}) => {
               <Table.HeadCell key={index}>{header}</Table.HeadCell>
             ))}
           </Table.Head>
-          {customer ? (
+          {customers ? (
             <Table.Body className="divide-y">
-              {customer.transactions.map((tran, index) => (
+              {customers?.transactions?.map((tran, index) => (
                 <Table.Row
                   key={index}
                   className="bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -70,6 +107,29 @@ const CustomerDetail = ({customerId}) => {
                   >
                     {tran.currentBalance}
                   </Table.Cell>
+                  <Table.Cell>
+                <div className="flex space-x-2">
+                  <Button
+                    size="xs"
+                    onClick={() => {
+                      setEditingTransaction(tran);
+                      setShowEditModal(true);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    size="xs"
+                    color="failure"
+                    onClick={() => {
+                      setTransactionToDelete(tran.trxId);
+                      setShowDeleteModal(true);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
@@ -78,6 +138,71 @@ const CustomerDetail = ({customerId}) => {
           )}
         </Table>
       </div>
+      {/* Edit Transaction Modal */}
+      <Modal show={showEditModal} onClose={() => setShowEditModal(false)}>
+        <Modal.Header>Edit Transaction</Modal.Header>
+        <form onSubmit={handleUpdate}>
+          <Modal.Body>
+            <div className="space-y-4">
+              <TextInput
+                label="Amount"
+                type="number"
+                value={editingTransaction?.amount || ''}
+                onChange={(e) => setEditingTransaction({
+                  ...editingTransaction,
+                  amount: parseFloat(e.target.value)
+                })}
+                required
+              />
+              <Select
+                label="Type"
+                value={editingTransaction?.type || ''}
+                onChange={(e) => setEditingTransaction({
+                  ...editingTransaction,
+                  type: e.target.value
+                })}
+                required
+              >
+                {/* <option value="credit">Credit</option> */}
+                <option value="deposit">Deposit</option>
+                <option value="withdraw">Withdraw</option>
+              </Select>
+              <TextInput
+                label="Description"
+                value={editingTransaction?.description || ''}
+                onChange={(e) => setEditingTransaction({
+                  ...editingTransaction,
+                  description: e.target.value
+                })}
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit" disabled={loading}>
+              {loading ? 'Updating...' : 'Update'}
+            </Button>
+            <Button color="gray" onClick={() => setShowEditModal(false)} disabled={loading}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
+        <Modal.Header>Confirm Delete</Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete this transaction?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button color="failure" onClick={handleDelete} disabled={loading}>
+            {loading ? 'Deleting...' : 'Delete'}
+          </Button>
+          <Button color="gray" onClick={() => setShowDeleteModal(false)} disabled={loading}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

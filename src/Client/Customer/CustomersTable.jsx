@@ -18,13 +18,14 @@ import {
 } from "../../redux/feature/customerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CustomerDetail from "../CustomerDetail";
+import { TopCard } from "../../DashBoard/Dashboard";
 
 const CustomersTable = () => {
   const dispatch = useDispatch();
   const { customers, searchResults, loading, error, pagination } = useSelector(
     (state) => state.customers
   );
-  console.log(customers);
+  // console.log(customers);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
@@ -56,6 +57,27 @@ const CustomersTable = () => {
     dispatch(setPage(page));
   };
 
+  // console.log(customers);
+  // const totalGet = customers.reduce((total,customer) => console.log(total + customer.balance),0);
+  // console.log(totalGet);
+
+  const { positive, negative } = customers.reduce(
+    (totals, customer) => {
+      const balance = Number(customer.balance) || 0; // Ensure it's a number
+
+      if (balance > 0) {
+        totals.positive += balance;
+      } else if (balance < 0) {
+        totals.negative += balance;
+      }
+      return totals;
+    },
+    { positive: 0, negative: 0 } // Proper initialization
+  );
+
+  // console.log('Total Positive:', positive);
+  // console.log('Total Negative:', Math.abs(negative)); // Absolute value
+
   const handleDelete = (id) => {
     console.log(id);
     // alert function
@@ -86,17 +108,6 @@ const CustomersTable = () => {
     <div>
       <div className="flex justify-between">
         <div>
-          {/* <h2>Search Customers by Name</h2> */}
-          {/* <form onSubmit={handleSearch}>
-            <input
-              type="text"
-              placeholder="Enter customer name"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit">Search</button>
-          </form> */}
-          {/* Search Bar */}
           <form onSubmit={handleSearch} className="mb-6">
             <div className="flex gap-2">
               <TextInput
@@ -134,6 +145,10 @@ const CustomersTable = () => {
             </div>
           </form>
         </div>
+        <div className="flex gap-3">
+          <TopCard text1={positive} text2={"Deposit"} />
+          <TopCard text1={negative} text2={"Withdraw"} />
+        </div>
         <div className="">
           <Link to={`/customer-create`}>
             <Button>New Customer</Button>
@@ -146,8 +161,8 @@ const CustomersTable = () => {
             {[
               "User ID",
               "User Name",
-              // "Category",
-              "Email",
+              "Balance",
+              // "Email",
               "Status",
               // "Price",
               // "Purchase Price",
@@ -169,7 +184,16 @@ const CustomersTable = () => {
                       {customer.customerId}
                     </Table.Cell>
                     <Table.Cell>{customer.name}</Table.Cell>
-                    <Table.Cell>{customer.email}</Table.Cell>
+                    <Table.Cell
+                      className={
+                        customer.balance < 0
+                          ? "text-red-500 xs"
+                          : "text-green-500 xs"
+                      }
+                    >
+                      {customer?.balance}
+                    </Table.Cell>
+                    {/* <Table.Cell>{customer.email}</Table.Cell> */}
                     <Table.Cell>{customer.phone}</Table.Cell>
                     {/* <Table.Cell>
                     {customer.stockQuantity * customer.purchasePrice}
@@ -192,7 +216,8 @@ const CustomersTable = () => {
                       {customer.customerId}
                     </Table.Cell>
                     <Table.Cell>{customer.name}</Table.Cell>
-                    <Table.Cell>{customer.email}</Table.Cell>
+                    <Table.Cell>{customer?.balance}</Table.Cell>
+                    {/* <Table.Cell>{customer.email}</Table.Cell> */}
                     <Table.Cell>{customer.phone}</Table.Cell>
                     {/* <Table.Cell>
                       {customer.stockQuantity * customer.purchasePrice}
