@@ -67,7 +67,8 @@ const ProductAdd = () => {
     // dispatch(addProduct(products));
     const result = await dispatch(addProduct(products));
     console.log(result);
-    if (result.payload && result.payload.acknowledged) {
+    // if (result.payload && result.payload.acknowledged)
+    if (result.payload || result.payload.acknowledged) {
       Swal.fire({
         title: "Success!",
         text: "Product added successfully!",
@@ -82,13 +83,13 @@ const ProductAdd = () => {
         confirmButtonText: "Try Again",
       });
     };
-    // setName('');
-    // setCategory('');
-    // setSupplier('');
-    // setpurchasePrice('');
-    // setsellPrice('');
-    // setStockQuantity('');
-    // setUnit('');
+    setName('');
+    setCategory('');
+    setSupplier('');
+    setpurchasePrice('');
+    setsellPrice('');
+    setStockQuantity('');
+    setUnit('');
   };
 
   return (
